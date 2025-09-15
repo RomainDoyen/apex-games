@@ -147,7 +147,11 @@ export default function AllGames() {
                         {currentGames.map((game) => (
                             <div key={game.id}>
                                 <Link to={`/games/${game.id}`}>
-                                    <GameCard title={game.name} image={game.background_image || ""} />
+                                    <GameCard 
+                                        title={game.name} 
+                                        image={game.background_image || ""} 
+                                        game={game}
+                                    />
                                 </Link>
                             </div>
                         ))}

@@ -8,6 +8,7 @@ export interface ButtonProps {
 export interface CardProps {
     title: string;
     image: string;
+    game?: Game;
 }
 
 export interface CompteurProps {
@@ -50,4 +51,43 @@ export interface Game {
     rating: number;
     rating_count?: number;
     released?: string;
+    description?: string;
+    description_raw?: string;
+    metacritic?: number;
+    playtime?: number;
+    platforms?: Array<{
+        platform: {
+            id: number;
+            name: string;
+        };
+    }>;
+    genres?: Array<{
+        id: number;
+        name: string;
+    }>;
+    developers?: Array<{
+        id: number;
+        name: string;
+    }>;
+    publishers?: Array<{
+        id: number;
+        name: string;
+    }>;
+    website?: string;
+    reddit_url?: string;
+    screenshots?: Array<{
+        id: number;
+        image: string;
+    }>;
+    short_screenshots?: Array<{
+        id: number;
+        image: string;
+    }>;
+}
+
+export interface Bookmark {
+    gameId: number;
+    gameName: string;
+    gameImage: string;
+    addedAt: Date;
 }
