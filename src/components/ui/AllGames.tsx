@@ -64,19 +64,19 @@ export default function AllGames() {
         // Filtrage par catégorie (tri)
         if (categoryFilter && categoryFilter !== "all") {
             switch (categoryFilter) {
-                case "Popularity":
+                case "Popularité":
                     filteredGames.sort((a, b) => (b.rating || 0) - (a.rating || 0));
                     break;
-                case "Game Title":
+                case "Titre du jeu":
                     filteredGames.sort((a, b) => a.name.localeCompare(b.name));
                     break;
-                case "Trending":
+                case "Tendance":
                     filteredGames.sort((a, b) => (b.rating_count || 0) - (a.rating_count || 0));
                     break;
-                case "Released Date":
+                case "Date de sortie":
                     filteredGames.sort((a, b) => new Date(b.released || '').getTime() - new Date(a.released || '').getTime());
                     break;
-                case "Top Rated":
+                case "Les mieux notés":
                     filteredGames.sort((a, b) => (b.rating || 0) - (a.rating || 0));
                     break;
                 default:
@@ -125,10 +125,10 @@ export default function AllGames() {
     return (
         <div className="all-games-container">
             <div className="all-games-header">
-                <h1>{allGames.length} Games</h1>
+                <h1>{allGames.length} Jeux</h1>
                 <Filter 
-                    placeholder="Search" 
-                    options={["Popularity", "Game Title", "Trending", "Released Date", "Top Rated"]} 
+                    placeholder="Rechercher" 
+                    options={["Popularité", "Titre du jeu", "Tendance", "Date de sortie", "Les mieux notés"]} 
                     onSearchChange={handleSearchChange}
                     onCategoryChange={handleCategoryChange}
                     searchValue={searchFilter}

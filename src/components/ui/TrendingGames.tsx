@@ -37,8 +37,8 @@ export default function TrendingGames() {
         return (
             <div className="trending-games">
                 <div className="trending-header">
-                    <h2>Recently trending</h2>
-                    <a href="/trending" className="see-more-link">See More</a>
+                    <h2>Tendances récentes</h2>
+                    <a href="/trending" className="see-more-link">Voir plus</a>
                 </div>
                 <div className="trending-cards trending-cards-loading">
                     <Spinner />
@@ -51,8 +51,8 @@ export default function TrendingGames() {
         return (
             <div className="trending-games">
                 <div className="trending-header">
-                    <h2>Recently trending</h2>
-                    <a href="/trending" className="see-more-link">See More</a>
+                    <h2>Tendances récentes</h2>
+                    <a href="/trending" className="see-more-link">Voir plus</a>
                 </div>
                 <div className="trending-cards">
                     <div style={{ 
@@ -84,8 +84,8 @@ export default function TrendingGames() {
     return (
         <div className="trending-games">
             <div className="trending-header">
-                <h2>Recently trending</h2>
-                <a href="/trending" className="see-more-link">See More</a>
+                <h2>Tendances récentes</h2>
+                <a href="/trending" className="see-more-link">Voir plus</a>
             </div>
             <div className="trending-cards">
                 {trendingGames && trendingGames.length > 0 ? (
