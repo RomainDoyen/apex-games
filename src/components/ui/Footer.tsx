@@ -6,15 +6,15 @@ export default function Footer() {
             <div className="footer-content">
                 <div className="footer-left">
                     <div className="footer-links">
-                        <a href="/about">About</a>
+                        <a href="/about">A propos</a>
                         <a href="/contact">Contact</a>
                         <a href="/backers">Backers</a>
                         <a href="/roadmap">Roadmap</a>
-                        <a href="/terms">Terms</a>
-                        <a href="/privacy">Privacy</a>
+                        <a href="/terms">Conditions d'utilisation</a>
+                        <a href="/privacy">Politique de confidentialité</a>
                     </div>
                     <div className="footer-copyright">
-                        © Apex Games • v1.0.0 • Powered by <strong>RAWG</strong>
+                        © Apex Games • v1.0.0 • Propulsé par <strong>RAWG</strong>
                     </div>
                 </div>
                 <div className="footer-right">
