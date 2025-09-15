@@ -4,7 +4,7 @@ import type { CardProps } from "../../types/types";
 
 export default function Card({ title, image }: CardProps) {
     return (
-        <div className="card">
+        <div className="card"draggable>
             <div className="card-image">
                 <Image src={image} alt={title} className="card-image" />
             </div>

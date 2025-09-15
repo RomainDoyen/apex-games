@@ -50,4 +50,5 @@ export interface Game {
     rating: number;
     rating_count?: number;
     released?: string;
+    status?: 'A faire' | 'En cours' | 'Termine' | 'Platine';
 }
