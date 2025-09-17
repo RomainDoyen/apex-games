@@ -21,8 +21,8 @@ export default function Header() {
                       </div>
                     <div className="nav-links">
 
-                        <a href="#">Connexion</a>
-                        <a href="#">Inscription</a>
+                        <Link to="/login">Connexion</Link>
+                        <Link to="/register">Inscription</Link>
                        <Link to="/games">Jeux</Link>
                         <a href="/backlog">Backlog</a>
 

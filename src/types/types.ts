@@ -38,11 +38,12 @@ export interface ImageProps {
 
 export interface InputProps {
     type: string;
+    name?: string;
     placeholder: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    className: string;
-    icon: React.ReactNode;
+    className?: string;
+    icon?: React.ReactNode;
 }
 
 export interface SpinnerProps {
@@ -106,5 +107,17 @@ export interface Bookmark {
     gameName: string;
     gameImage: string;
     addedAt: Date;
+}
+
+export interface LoginFormData {
+    email: string;
+    password: string;
+}
+
+export interface RegisterFormData {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
 }
 
