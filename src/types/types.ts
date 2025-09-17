@@ -11,6 +11,12 @@ export interface CardProps {
     game?: Game;
 }
 
+export interface MovableCardProps {
+    id: number;
+    title: string;
+    image: string;
+}
+
 export interface CompteurProps {
     title: string;
     value: number;
@@ -51,7 +57,8 @@ export interface Game {
     rating: number;
     rating_count?: number;
     released?: string;
-    description?: string;
+    status?: 'A faire' | 'En cours' | 'Termine' | 'Platine';
+   description?: string;
     description_raw?: string;
     metacritic?: number;
     playtime?: number;
@@ -85,9 +92,19 @@ export interface Game {
     }>;
 }
 
+
+export interface BacklogColumnProps {
+    title: string;
+    status: Game['status'];
+    games: Game[];
+    onMoveGame: (gameId: number, newStatus: Game['status']) => void;
+}
+
+
 export interface Bookmark {
     gameId: number;
     gameName: string;
     gameImage: string;
     addedAt: Date;
 }
+

@@ -1,4 +1,4 @@
-.movableCard {
+.card {
     width: 100%;
     background: #1a1a1a;
     border-radius: 5px;
@@ -11,20 +11,20 @@
     position: relative;
 }
 
-.movableCard-image {
+.card-image {
     width: 100%;
     height: 211px;
     overflow: hidden;
 }
 
-.movableCard-image img {
+.card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: opacity 0.2s ease;
 }
 
-.movableCard-content {
+.card-content {
     position: absolute;
     top: 0;
     left: 0;
@@ -39,16 +39,16 @@
     justify-content: center;
 }
 
-.movableCard:hover .movableCard-content {
+.card:hover .card-content {
     opacity: 1;
     background: rgba(0, 0, 0, 0.2);
 }
 
-.movableCard:hover .movableCard-image img {
+.card:hover .card-image img {
     opacity: 0.3;
 }
 
-.movableCard-content h3 {
+.card-content h3 {
     font-size: 1rem;
     font-weight: 600;
     color: #ffffff;
@@ -59,7 +59,7 @@
     text-align: center;
 }
 
-.movableCard-content p {
+.card-content p {
     font-size: 0.875rem;
     color: #7E8A94;
     margin: 0;
