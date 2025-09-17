@@ -40,7 +40,7 @@ export default function Filter({
                 value={categoryValue} 
                 onChange={(e) => handleCategoryChange(e.target.value)}
             >
-                <option value="all">All</option>
+                <option value="all">Tous</option>
                 {options.map((option) => (
                     <option key={option} value={option}>{option}</option>
                 ))}

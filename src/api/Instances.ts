@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
     },
 });
 
-// Intercepteur pour ajouter la clé API à chaque requête
+// Intercepteur pour ajouter la clé API et les paramètres de localisation à chaque requête
 axiosInstance.interceptors.request.use(
     (requestConfig) => {
         // Vérifier si la clé API est disponible
@@ -23,6 +23,10 @@ axiosInstance.interceptors.request.use(
         } else {
             throw new Error("Clé API RAWG manquante. Vérifiez votre fichier .env");
         }
+        
+        // Ajouter les paramètres de localisation française
+        requestConfig.params.language = 'fr';
+        requestConfig.params.region = 'fr';
         
         return requestConfig;
     },

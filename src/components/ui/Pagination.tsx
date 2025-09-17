@@ -61,7 +61,7 @@ export default function Pagination({
                     disabled={currentPage === 1}
                     aria-label="Page précédente"
                 >
-                    Previous
+                    Précédent
                 </button>
                 
                 {getPageNumbers().map((pageNum) => (
@@ -82,7 +82,7 @@ export default function Pagination({
                     disabled={currentPage === totalPages}
                     aria-label="Page suivante"
                 >
-                    Next
+                    Suivant
                 </button>
             </div>
         </div>

@@ -8,6 +8,7 @@ export interface ButtonProps {
 export interface CardProps {
     title: string;
     image: string;
+    game?: Game;
 }
 
 export interface MovableCardProps {
@@ -57,7 +58,40 @@ export interface Game {
     rating_count?: number;
     released?: string;
     status?: 'A faire' | 'En cours' | 'Termine' | 'Platine';
+   description?: string;
+    description_raw?: string;
+    metacritic?: number;
+    playtime?: number;
+    platforms?: Array<{
+        platform: {
+            id: number;
+            name: string;
+        };
+    }>;
+    genres?: Array<{
+        id: number;
+        name: string;
+    }>;
+    developers?: Array<{
+        id: number;
+        name: string;
+    }>;
+    publishers?: Array<{
+        id: number;
+        name: string;
+    }>;
+    website?: string;
+    reddit_url?: string;
+    screenshots?: Array<{
+        id: number;
+        image: string;
+    }>;
+    short_screenshots?: Array<{
+        id: number;
+        image: string;
+    }>;
 }
+
 
 export interface BacklogColumnProps {
     title: string;
@@ -65,3 +99,12 @@ export interface BacklogColumnProps {
     games: Game[];
     onMoveGame: (gameId: number, newStatus: Game['status']) => void;
 }
+
+
+export interface Bookmark {
+    gameId: number;
+    gameName: string;
+    gameImage: string;
+    addedAt: Date;
+}
+
