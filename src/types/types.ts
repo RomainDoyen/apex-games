@@ -6,6 +6,11 @@ export interface ButtonProps {
 }
 
 export interface CardProps {
+    title: string;
+    image: string;
+}
+
+export interface MovableCardProps {
     id: number;
     title: string;
     image: string;
@@ -52,4 +57,11 @@ export interface Game {
     rating_count?: number;
     released?: string;
     status?: 'A faire' | 'En cours' | 'Termine' | 'Platine';
+}
+
+export interface BacklogColumnProps {
+    title: string;
+    status: Game['status'];
+    games: Game[];
+    onMoveGame: (gameId: number, newStatus: Game['status']) => void;
 }

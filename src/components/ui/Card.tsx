@@ -2,11 +2,9 @@ import "../../styles/components/Card.css"
 import Image from "./Image"
 import type { CardProps } from "../../types/types";
 
-export default function Card({id, title, image }: CardProps) {
+export default function Card({title, image }: CardProps) {
     return (
-        <div className="card"draggable onDragStart={(e)=>{
-            e.dataTransfer.setData('gameId',id.toString());
-        }}>
+        <div className="card">
             <div className="card-image">
                 <Image src={image} alt={title} className="card-image" />
             </div>

@@ -1,14 +1,7 @@
 import React from 'react';
-import type { Game } from '../../types/types' 
-import GameCard from './Card';
+import type { BacklogColumnProps } from '../../types/types' 
+import MovableCard from './MovableCard';
 import "../../styles/components/BacklogColumn.css";
-
-interface BacklogColumnProps {
-    title: string;
-    status: Game['status'];
-    games: Game[];
-    onMoveGame: (gameId: number, newStatus: Game['status']) => void;
-}
 
 export default function BacklogColumn({ title, status, games, onMoveGame }: BacklogColumnProps) {
     // Gestion du glisser-déposer (Drag and Drop)
@@ -30,7 +23,7 @@ export default function BacklogColumn({ title, status, games, onMoveGame }: Back
             <h2>{title}</h2>
             <div className="games-list">
                 {games.map(game => (
-                    <GameCard id={game.id} title={game.name} image={game.background_image} />
+                    <MovableCard id={game.id} title={game.name} image={game.background_image} />
                 ))}
             </div>
         </div>
