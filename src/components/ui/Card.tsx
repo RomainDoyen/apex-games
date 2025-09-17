@@ -4,7 +4,7 @@ import BookmarkButton from "./BookmarkButton"
 import type { CardProps } from "../../types/types";
 
 
-export default function Card({title, image }: CardProps) {
+export default function Card({title, image, game }: CardProps) {
 
     return (
         <div className="card">
