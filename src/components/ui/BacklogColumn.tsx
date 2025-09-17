@@ -30,7 +30,7 @@ export default function BacklogColumn({ title, status, games, onMoveGame }: Back
             <h2>{title}</h2>
             <div className="games-list">
                 {games.map(game => (
-                    <GameCard key={game.id} title={game.name} image={game.background_image} />
+                    <GameCard id={game.id} title={game.name} image={game.background_image} />
                 ))}
             </div>
         </div>
