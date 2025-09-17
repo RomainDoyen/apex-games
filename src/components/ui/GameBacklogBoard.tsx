@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Game } from '../../types/types' 
+import {initialGames} from '../../data/mockdata'
 import BacklogColumn from './BacklogColumn';
 import "../../styles/components/GameBacklogBoard.css";
 
@@ -9,14 +10,6 @@ import "../../styles/components/GameBacklogBoard.css";
  * afficher les datas de l'api et pas des mockdata à la con
  * Trouver un travail
  ***********************************************************************************/
-// mock data
-const initialGames: Game[] = [
-    { id: 1, name: 'Cyberpunk 2077', background_image: '...', rating: 3.5, status: 'A faire' },
-    { id: 2, name: 'Farming simulator 974', background_image: '...', rating: 3.5, status: 'A faire' },
-    { id: 3, name: 'The Witcher 3', background_image: '...', rating: 4.8, status: 'En cours' },
-    { id: 4, name: 'Hogwarts Legacy', background_image: '...', rating: 4.2, status: 'Termine' },
-    { id: 5, name: 'Elden Ring', background_image: '...', rating: 4.6, status: 'Platine' },
-];
 
 export default function GameBacklogBoard() {
     const [games, setGames] = useState<Game[]>(initialGames);
