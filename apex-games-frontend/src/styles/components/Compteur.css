@@ -1,0 +1,29 @@
+.compteur-container {
+    display: grid;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.data {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.compteur-pastille {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.compteur-title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #7E8A94;
+}
+
+.compteur-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+}

@@ -1,0 +1,126 @@
+.auth-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #16181c;
+    padding: 20px;
+}
+
+.auth-form {
+    background-color: #1e1f23;
+    border: 1px solid #26282c;
+    border-radius: 10px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-form-header h2 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+}
+
+.auth-form-header p {
+    color: #cecece;
+    font-size: 14px;
+    margin: 0;
+}
+
+.auth-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Les styles pour .auth-input sont maintenant dans Input.css */
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #cecece;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+    accent-color: #646cff;
+}
+
+.forgot-password {
+    color: #646cff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #535bf2;
+}
+
+.auth-form-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #26282c;
+}
+
+.auth-form-footer p {
+    color: #cecece;
+    font-size: 14px;
+    margin: 0;
+}
+
+.switch-form-btn {
+    background: none;
+    border: none;
+    color: #646cff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+.switch-form-btn:hover {
+    color: #535bf2;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .auth-form {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+    
+    .auth-form-header h2 {
+        font-size: 24px;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}

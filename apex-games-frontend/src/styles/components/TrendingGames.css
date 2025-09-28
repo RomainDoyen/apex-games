@@ -1,0 +1,75 @@
+.trending-games {
+    width: 100%;
+    margin-top: 40px;
+    overflow: hidden;
+}
+
+.trending-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.trending-header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.see-more-link {
+    color: #98daeb;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.see-more-link:hover {
+    text-decoration: underline;
+}
+
+.trending-cards {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    padding-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+
+.trending-cards-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    grid-template-columns: none;
+}
+
+/* Responsive design pour différentes tailles d'écran */
+@media (max-width: 1400px) {
+    .trending-cards {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .trending-cards {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .trending-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .trending-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+

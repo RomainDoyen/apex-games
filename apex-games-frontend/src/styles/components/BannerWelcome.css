@@ -1,0 +1,55 @@
+.banner-welcome {
+    width: 60%;
+    background-color: transparent;
+    z-index: 1;
+    position: absolute;
+    top: 150px;
+}
+
+.banner-welcome h1 {
+    font-size: 4rem;
+    font-weight: 600;
+    color: #ffffff;
+    width: 500px;
+    line-height: 1;
+    text-transform: uppercase;
+    font-family: 'Bungee', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banner-welcome h5 {
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 0;
+    margin-bottom: 0;
+    color: #98daeb;
+}
+
+.metrics {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-top: 20px;
+}
+
+.banner-welcome-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.banner-welcome-button p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #7E8A94;
+}
+
+.banner-welcome-button-link {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.banner-welcome-button-link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,23 @@
+.home-container {
+    margin: 0 auto;
+    position: relative;
+}
+
+.home-banner {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.home-cards {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0 auto;
+    margin-top: 450px;
+}

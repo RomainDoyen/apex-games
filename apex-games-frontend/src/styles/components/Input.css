@@ -1,0 +1,75 @@
+/* Container pour les inputs */
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Style de base pour tous les inputs */
+.input-field {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Input pour la recherche dans le header */
+.search-input {
+    width: 100%;
+    height: 100%;
+    background-color: #16181c;
+    border: 1px solid #26282c;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-input .input-field {
+    flex: 1;
+    padding: 0 10px;
+}
+
+/* Input pour les formulaires d'authentification */
+.auth-input {
+    width: 100%;
+    height: 45px;
+    background-color: #16181c;
+    border: 1px solid #26282c;
+    border-radius: 5px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.auth-input .input-field {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.auth-input .input-field::placeholder {
+    color: #666;
+}
+
+.auth-input:focus-within {
+    border-color: #646cff;
+}
+
+/* Icônes */
+.input-icon {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

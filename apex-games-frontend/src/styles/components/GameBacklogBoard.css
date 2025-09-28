@@ -1,0 +1,10 @@
+
+.gameBacklog-board {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    overflow-x: auto;
+    height: calc(100vh - 100px);
+    padding-top: 160px;
+}
