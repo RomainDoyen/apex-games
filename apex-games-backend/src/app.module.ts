@@ -3,6 +3,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/module'; 
+import { BacklogModule } from './backlog/backlog.module';
 
 @Module({
   imports: [
@@ -11,7 +12,9 @@ import { SupabaseModule } from './supabase/module';
       isGlobal: true, 
     }),
     
-    SupabaseModule, 
+    SupabaseModule,
+    
+    BacklogModule, 
   ],
   controllers: [],
   providers: [],
