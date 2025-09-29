@@ -1,0 +1,199 @@
+.admin-container {
+    min-height: 100vh;
+    background-color: #16181C;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: white;
+    position: relative;
+}
+
+.back-to-home-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #1e1f23;
+    color: white;
+    border: 1px solid #26282c;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-to-home-btn:hover {
+    background-color: #26282c;
+    transform: translateY(-1px);
+}
+
+.admin-header h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-family: 'Bungee', sans-serif;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.admin-header p {
+    font-size: 1.2rem;
+    color: #98daeb;
+    margin: 0;
+}
+
+.success-message {
+    background: #4CAF50;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.admin-actions {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.add-game-btn {
+    background-color: #98daeb;
+    color: #16181C;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-game-btn:hover {
+    background-color: #82b9c7;
+    transform: translateY(-2px);
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.stat-card {
+    background-color: #1e1f23;
+    border: 1px solid #26282c;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #cecece;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #98daeb;
+}
+
+.access-denied {
+    text-align: center;
+    color: white;
+    padding: 4rem 2rem;
+}
+
+.access-denied h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #98daeb;
+    font-family: 'Bungee', sans-serif;
+    text-transform: uppercase;
+}
+
+.access-denied p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #cecece;
+}
+
+.back-btn {
+    background-color: #1e1f23;
+    color: white;
+    border: 1px solid #26282c;
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #26282c;
+    transform: translateY(-2px);
+}
+
+.loading-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-content {
+        padding: 1rem;
+    }
+    
+    .admin-header h1 {
+        font-size: 2rem;
+    }
+    
+    .back-to-home-btn {
+        position: static;
+        margin-bottom: 1rem;
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .admin-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+}

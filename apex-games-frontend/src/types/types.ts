@@ -121,3 +121,23 @@ export interface RegisterFormData {
     confirmPassword: string;
 }
 
+export interface AddGameFormData {
+    name: string;
+    description: string;
+    background_image: string;
+    rating: number;
+    released: string;
+    metacritic: number;
+    website: string;
+    genres: string;
+    developers: string;
+    publishers: string;
+}
+
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    role: 'user' | 'admin';
+}
+

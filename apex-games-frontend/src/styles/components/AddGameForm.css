@@ -1,0 +1,165 @@
+.add-game-form-container {
+    background-color: #1e1f23;
+    border: 1px solid #26282c;
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-game-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.add-game-form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.add-game-form-header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+    font-family: 'Bungee', sans-serif;
+    text-transform: uppercase;
+}
+
+.add-game-form-header p {
+    font-size: 1rem;
+    color: #98daeb;
+}
+
+.add-game-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #26282c;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #16181C;
+    color: #ffffff;
+}
+
+.admin-input:focus {
+    outline: none;
+    border-color: #98daeb;
+    box-shadow: 0 0 0 3px rgba(152, 218, 235, 0.1);
+}
+
+.admin-textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #26282c;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.3s ease;
+    background-color: #16181C;
+    color: #ffffff;
+}
+
+.admin-textarea:focus {
+    outline: none;
+    border-color: #98daeb;
+    box-shadow: 0 0 0 3px rgba(152, 218, 235, 0.1);
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #26282c;
+}
+
+.cancel-btn {
+    background-color: #1e1f23;
+    color: white;
+    border: 1px solid #26282c;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #26282c;
+    transform: translateY(-1px);
+}
+
+/* Style pour le bouton d'ajout (utilise le composant Button existant) */
+.form-actions .button {
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.form-actions .button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(152, 218, 235, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .add-game-form-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .cancel-btn,
+    .form-actions .button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .add-game-form-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .add-game-form-container {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+}

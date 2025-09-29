@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router'
 import Games from './pages/Games.tsx'
 import Login from './pages/Login.tsx'
 import Register from './pages/Register.tsx'
+import Admin from './pages/Admin.tsx'
 
 import Backlog from './pages/GameBacklog.tsx'
 import GameDetails from './pages/GameDetails.tsx'
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
       <Route path="/games" element={<Games />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/admin" element={<Admin />} />
        <Route path="/backlog" element={<Backlog />} />
       <Route path="/games/:id" element={<GameDetails />} />
 
