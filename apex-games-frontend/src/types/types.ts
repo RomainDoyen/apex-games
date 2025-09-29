@@ -141,3 +141,21 @@ export interface User {
     role: 'user' | 'admin';
 }
 
+export interface GameReview {
+    id?: number;
+    gameId: number;
+    userId: number;
+    rating: number;
+    comment: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export interface ReviewModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    gameId: number;
+    gameName: string;
+    onSubmit: (review: Omit<GameReview, 'id' | 'createdAt' | 'updatedAt'>) => void;
+}
+

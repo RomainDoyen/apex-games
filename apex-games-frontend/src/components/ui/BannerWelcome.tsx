@@ -15,7 +15,7 @@ export default function BannerWelcome() {
                 <Compteur title="Listes" value={526} valueMetrics="K" pastilleColor="#EA4747" />
             </div>
             <div className="banner-welcome-button">
-                <Button text="Créer un compte gratuit" color="#ffffff" backgroundColor="#008AC0" link="/signup" />
+                <Button text="Créer un compte gratuit" color="#ffffff" backgroundColor="#008AC0" link="/register" />
                 <p>ou <a href="/login" className="banner-welcome-button-link">connexion</a> si vous avez un compte</p>
             </div>
         </div>
