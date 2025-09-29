@@ -144,7 +144,7 @@ export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterForm
                     <Button
                         text="S'inscrire"
                         color="#fff"
-                        backgroundColor="#646cff"
+                        backgroundColor="rgb(0, 138, 192)"
                         link=""
                     />
                 </form>

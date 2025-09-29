@@ -64,19 +64,23 @@
     cursor: pointer;
 }
 
+.auth-input:focus-within {
+    border-color: #98daeb;
+}
+
 .remember-me input[type="checkbox"] {
-    accent-color: #646cff;
+    accent-color: #98daeb;
 }
 
 .forgot-password {
-    color: #646cff;
+    color: #98daeb;
     text-decoration: none;
     font-size: 14px;
     transition: color 0.3s ease;
 }
 
 .forgot-password:hover {
-    color: #535bf2;
+    color: #82b9c7;
 }
 
 .auth-form-footer {
@@ -95,7 +99,7 @@
 .switch-form-btn {
     background: none;
     border: none;
-    color: #646cff;
+    color: #98daeb;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -104,7 +108,7 @@
 }
 
 .switch-form-btn:hover {
-    color: #535bf2;
+    color: #82b9c7;
 }
 
 /* Responsive */

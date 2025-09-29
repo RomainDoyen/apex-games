@@ -69,20 +69,24 @@
     line-height: 1.4;
 }
 
+.auth-input:focus-within {
+    border-color: #98daeb;
+}
+
 .terms-checkbox input[type="checkbox"] {
-    accent-color: #646cff;
+    accent-color: #98daeb;
     margin-top: 2px;
     flex-shrink: 0;
 }
 
 .terms-checkbox a {
-    color: #646cff;
+    color: #98daeb;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .terms-checkbox a:hover {
-    color: #535bf2;
+    color: #82b9c7;
 }
 
 .auth-form-footer {
@@ -101,7 +105,7 @@
 .switch-form-btn {
     background: none;
     border: none;
-    color: #646cff;
+    color: #98daeb;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -110,7 +114,7 @@
 }
 
 .switch-form-btn:hover {
-    color: #535bf2;
+    color: #82b9c7;
 }
 
 /* Responsive */

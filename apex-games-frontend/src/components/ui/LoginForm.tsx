@@ -72,7 +72,7 @@ export default function LoginForm({ onSubmit, onSwitchToRegister }: LoginFormPro
                     <Button
                         text="Se connecter"
                         color="#fff"
-                        backgroundColor="#646cff"
+                        backgroundColor="rgb(0, 138, 192)"
                         link=""
                     />
                 </form>
