@@ -1,4 +1,7 @@
-.card {
+/* ========================================================== */
+/* STYLES GÉNÉRAUX DE LA CARTE (Base) */
+/* ========================================================== */
+.card, .movableCard {
     width: 100%;
     background: #1a1a1a;
     border-radius: 5px;
@@ -24,7 +27,10 @@
     transition: opacity 0.2s ease;
 }
 
-.card-content {
+/* ========================================================== */
+/* CONTENU APPARAISSANT AU SURVOL (Titre + Actions) */
+/* ========================================================== */
+.card-content, .movableCard-content {
     position: absolute;
     top: 0;
     left: 0;
@@ -34,29 +40,36 @@
     background: rgba(0, 0, 0, 0.3);
     opacity: 0;
     transition: opacity 0.2s ease, background 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
 }
 
-.card:hover .card-content {
+.card:hover .card-content,
+.movableCard:hover .movableCard-content {
     opacity: 1;
     background: rgba(0, 0, 0, 0.2);
 }
 
-.card:hover .card-image img {
+.card:hover .card-image img,
+.movableCard:hover .movableCard-image img {
     opacity: 0.3;
 }
 
-.card-content h3 {
+
+.card-content h3, .movableCard-content h3 {
     font-size: 1rem;
     font-weight: 600;
     color: #ffffff;
-    margin: 0;
     line-height: 1.2;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     text-align: center;
+    width: 100%;
+    
+    margin: 0 0 15px 0; 
 }
 
 .card-content p {
@@ -64,4 +77,67 @@
     color: #7E8A94;
     margin: 0;
     line-height: 1.4;
+}
+
+
+.card-floating-actions {
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    margin-top: 10px; 
+    z-index: 15;
+}
+
+
+.action-icon, .movableCard-delete-button {
+    background: rgba(40, 167, 69, 0.8);
+    color: white;
+    border: 2px solid #1a1a1a; 
+    border-radius: 50%; 
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index: 15;
+}
+
+.movableCard-delete-button {
+    position: absolute;
+    top: 5px;  
+    right: 5px; 
+    background: #FF4D4D; 
+    width: 28px;
+    height: 28px;
+    line-height: 24px; 
+    font-size: 1.2rem; 
+    z-index: 20; 
+}
+.movableCard-delete-button:hover {
+    background: #CC0000; 
+    transform: scale(1.1); 
+}
+
+.action-icon {
+    width: 32px; 
+    height: 32px;
+    line-height: 28px; 
+    font-size: 1.1rem; 
+}
+.action-icon:hover {
+    transform: scale(1.1);
+}
+
+.info-icon {
+    background: rgba(0, 123, 255, 0.8); 
+}
+.info-icon:hover {
+    background: #0056b3;
+}
+
+.review-icon {
+    background: rgba(255, 193, 7, 0.9); 
+    color: #333; 
+}
+.review-icon:hover {
+    background: #e0a800;
 }
