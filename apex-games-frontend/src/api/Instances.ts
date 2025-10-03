@@ -10,6 +10,15 @@ const axiosInstance = axios.create({
     },
 });
 
+// Connexion au backend
+const axiosInstanceBackend = axios.create({
+    baseURL: 'http://localhost:3000',
+    timeout: 10000,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
 // Intercepteur pour ajouter la clé API et les paramètres de localisation à chaque requête
 axiosInstance.interceptors.request.use(
     (requestConfig) => {
@@ -35,4 +44,15 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-export default axiosInstance;
+// Intercepteur pour ajouter la clé API et les paramètres de localisation à chaque requête
+axiosInstanceBackend.interceptors.request.use(
+    (requestConfig) => {
+        return requestConfig;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+
+export { axiosInstance, axiosInstanceBackend };

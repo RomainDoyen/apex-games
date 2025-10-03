@@ -8,6 +8,7 @@ import Register from './pages/Register.tsx'
 
 import Backlog from './pages/GameBacklog.tsx'
 import GameDetails from './pages/GameDetails.tsx'
+import TestApi from './pages/TestApi.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
       <Route path="/register" element={<Register />} />
        <Route path="/backlog" element={<Backlog />} />
       <Route path="/games/:id" element={<GameDetails />} />
+      <Route path="/test-api" element={<TestApi />} />
 
     </Routes>
   </BrowserRouter>,
