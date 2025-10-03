@@ -1,12 +1,20 @@
 import banner from "../../assets/images/banner.png"
 import "../../styles/components/Header.css"
 import Input from "./Input"
-import { SearchIcon } from "lucide-react"
+import { SearchIcon, LogOut, User } from "lucide-react"
 import Image from "./Image"
 import { Link } from 'react-router-dom'
 import logo from "../../assets/images/logo-apex.png"
+import { useAuthStore } from "../../store/authStore"
 
 export default function Header() {
+    const { isAuthenticated, user, logout } = useAuthStore();
+
+    const handleLogout = () => {
+        logout();
+        window.location.href = '/';
+    };
+
     return (
         <>
             <div className="header">
@@ -20,11 +28,39 @@ export default function Header() {
                         </Link> 
                       </div>
                     <div className="nav-links">
-
-                        <Link to="/login">Connexion</Link>
-                        <Link to="/register">Inscription</Link>
-                       <Link to="/games">Jeux</Link>
-                        <a href="/backlog">Backlog</a>
+                        {isAuthenticated ? (
+                            <>
+                                <Link to="/games">Jeux</Link>
+                                <Link to="/backlog">Backlog</Link>
+                                {(user?.role === 'admin' || user?.role === 'moderator') && (
+                                    <Link to="/admin">Admin</Link>
+                                )}
+                                
+                                <div className="user-menu">
+                                    <span className="user-greeting">
+                                        <User size={16} />
+                                        Bonjour, {user?.username}
+                                        {user?.role === 'admin' && <span className="role-badge admin">Admin</span>}
+                                        {user?.role === 'moderator' && <span className="role-badge moderator">Mod</span>}
+                                    </span>
+                                    <button 
+                                        className="logout-btn"
+                                        onClick={handleLogout}
+                                        title="Se déconnecter"
+                                    >
+                                        <LogOut size={16} />
+                                        Déconnexion
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login">Connexion</Link>
+                                <Link to="/register">Inscription</Link>
+                                <Link to="/games">Jeux</Link>
+                                <Link to="/backlog">Backlog</Link>
+                            </>
+                        )}
 
                         <Input 
                             type="text" 

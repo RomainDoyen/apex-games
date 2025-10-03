@@ -3,6 +3,7 @@ export interface ButtonProps {
     color: string;
     backgroundColor: string;
     link: string;
+    disabled?: boolean;
 }
 
 export interface CardProps {
@@ -120,4 +121,5 @@ export interface RegisterFormData {
     password: string;
     confirmPassword: string;
 }
+
 

@@ -1,10 +1,26 @@
+/* Page de login */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
 .auth-form-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #16181c;
-    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .auth-form {
@@ -107,6 +123,52 @@
     color: #535bf2;
 }
 
+.error-message {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Message de succès */
+.success-message {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #10b981;
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.3s ease-out;
+    z-index: 10;
+    max-width: 400px;
+    width: 90%;
+}
+
+.success-message p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     .auth-form {
@@ -122,5 +184,14 @@
         flex-direction: column;
         gap: 10px;
         align-items: flex-start;
+    }
+    
+    .success-message {
+        margin-bottom: 15px;
+        padding: 12px 16px;
+    }
+    
+    .success-message p {
+        font-size: 13px;
     }
 }
