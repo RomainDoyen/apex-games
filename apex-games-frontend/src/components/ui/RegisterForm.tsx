@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../../styles/components/RegisterForm.css";
 import Button from "./Button";
 import Input from "./Input";
+import { useAuthStore } from "../../store/authStore";
 import type { RegisterFormData } from "../../types/types";
 
 interface RegisterFormProps {
-    onSubmit: (data: RegisterFormData) => void;
     onSwitchToLogin: () => void;
 }
 
-export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterFormProps) {
+export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
     const [formData, setFormData] = useState<RegisterFormData>({
         username: '',
         email: '',
@@ -18,6 +19,11 @@ export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterForm
     });
 
     const [errors, setErrors] = useState<Partial<RegisterFormData>>({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const { register } = useAuthStore();
+    const navigate = useNavigate();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -42,6 +48,10 @@ export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterForm
             newErrors.username = 'Le nom d\'utilisateur est requis';
         } else if (formData.username.length < 3) {
             newErrors.username = 'Le nom d\'utilisateur doit contenir au moins 3 caractères';
+        } else if (formData.username.length > 20) {
+            newErrors.username = 'Le nom d\'utilisateur ne peut pas dépasser 20 caractères';
+        } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
+            newErrors.username = 'Le nom d\'utilisateur ne peut contenir que des lettres, chiffres et underscores';
         }
 
         if (!formData.email.trim()) {
@@ -52,8 +62,10 @@ export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterForm
 
         if (!formData.password) {
             newErrors.password = 'Le mot de passe est requis';
-        } else if (formData.password.length < 6) {
-            newErrors.password = 'Le mot de passe doit contenir au moins 6 caractères';
+        } else if (formData.password.length < 8) {
+            newErrors.password = 'Le mot de passe doit contenir au moins 8 caractères';
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(formData.password)) {
+            newErrors.password = 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial';
         }
 
         if (!formData.confirmPassword) {
@@ -66,10 +78,25 @@ export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterForm
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (validateForm()) {
-            onSubmit(formData);
+        if (!validateForm()) return;
+
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            await register(formData.username, formData.email, formData.password);
+            
+            // Rediriger vers la page de connexion après inscription réussie
+            navigate('/login', { 
+                replace: true,
+                state: { fromRegister: true }
+            });
+        } catch (err: any) {
+            setError(err.message || 'Erreur d\'inscription');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -92,6 +119,7 @@ export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterForm
                             className="auth-input"
                             icon={null}
                         />
+                        <small className="field-hint">3-20 caractères, lettres, chiffres et underscores uniquement</small>
                         {errors.username && <span className="error-message">{errors.username}</span>}
                     </div>
                     
@@ -118,6 +146,7 @@ export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterForm
                             className="auth-input"
                             icon={null}
                         />
+                        <small className="field-hint">Min. 8 caractères avec majuscule, minuscule, chiffre et caractère spécial</small>
                         {errors.password && <span className="error-message">{errors.password}</span>}
                     </div>
                     
@@ -141,11 +170,18 @@ export default function RegisterForm({ onSubmit, onSwitchToLogin }: RegisterForm
                         </label>
                     </div>
                     
+                    {error && (
+                        <div className="error-message">
+                            {error}
+                        </div>
+                    )}
+                    
                     <Button
-                        text="S'inscrire"
+                        text={isLoading ? "Inscription..." : "S'inscrire"}
                         color="#fff"
                         backgroundColor="rgb(0, 138, 192)"
                         link=""
+                        disabled={isLoading}
                     />
                 </form>
                 

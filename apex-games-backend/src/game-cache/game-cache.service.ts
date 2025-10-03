@@ -1,14 +1,10 @@
-
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { SupabaseService } from '../supabase/supabase.service';
 import { RawgService } from '../rawg/rawg.service';
-import { CachedGame } from './interfaces/cached-game.interface';
-import { RawgGame } from '../rawg/interfaces/game.interface';
 
 @Injectable()
 export class GameCacheService {
   private readonly logger = new Logger(GameCacheService.name);
-  private readonly CACHE_DURATION_HOURS = 24; // Durée de validité du cache en heures
 
   constructor(
     private readonly supabaseService: SupabaseService,
@@ -16,93 +12,74 @@ export class GameCacheService {
   ) {}
 
   /**
-   * Vérifie si un jeu est dans le cache et si ses données sont encore valides.
-   * Si non, il l'appelle via RawgService et le met en cache.
-   * Retourne les données du jeu depuis le cache.
+   * Récupère un jeu depuis le cache ou le télécharge depuis RAWG
    */
-  async findOrCreateAndGetGame(rawgId: number): Promise<CachedGame> {
-    this.logger.debug(`Recherche du jeu RAWG ID ${rawgId} dans le cache...`);
+  async getOrFetchGame(rawgId: number) {
+    const client = this.supabaseService.client;
 
-    // 1. Tenter de récupérer le jeu du cache
-    const cachedGame = await this.getGameFromCache(rawgId);
-
-    if (cachedGame && !this.isCacheExpired(cachedGame.cached_at)) {
-      this.logger.debug(`Jeu RAWG ID ${rawgId} trouvé dans le cache et valide.`);
-      return cachedGame; // Le cache est bon, on le retourne
-    }
-
-    // 2. Si non trouvé ou expiré, appeler l'API RAWG
-    this.logger.log(`Jeu RAWG ID ${rawgId} manquant ou expiré. Appel de l'API RAWG...`);
-    let rawgGame: RawgGame;
-    try {
-      rawgGame = await this.rawgService.getGameDetails(rawgId);
-    } catch (error) {
-      this.logger.error(`Erreur lors de l'appel à RAWG pour l'ID ${rawgId}: ${error.message}`);
-      throw new InternalServerErrorException(`Impossible de récupérer les détails du jeu RAWG ID ${rawgId}.`);
-    }
-
-    // 3. Mettre à jour ou insérer dans le cache
-    const newCacheEntry: CachedGame = {
-      rawg_id: rawgGame.id,
-      name: rawgGame.name,
-      image_url: rawgGame.background_image,
-      metacritic_score: rawgGame.metacritic,
-      released_date: rawgGame.released,
-      cached_at: new Date().toISOString(), // Date actuelle
-    };
-
-    if (cachedGame) {
-      this.logger.debug(`Mise à jour du cache pour le jeu RAWG ID ${rawgId}.`);
-      await this.updateGameInCache(newCacheEntry);
-    } else {
-      this.logger.debug(`Insertion du jeu RAWG ID ${rawgId} dans le cache.`);
-      await this.insertGameIntoCache(newCacheEntry);
-    }
-
-    return newCacheEntry; // Retourne la nouvelle entrée cachée
-  }
-
-  private async getGameFromCache(rawgId: number): Promise<CachedGame | null> {
-    const { data, error } = await this.supabaseService.client
+    // 1. Vérifier si le jeu existe déjà en cache
+    const { data: cachedGame, error: fetchError } = await client
       .from('GameCache')
       .select('*')
       .eq('rawg_id', rawgId)
-      .maybeSingle(); // Utilise maybeSingle pour obtenir null si non trouvé
+      .single();
 
-    if (error && error.code !== 'PGRST116') { // PGRST116 = pas de ligne trouvée, ce qui est OK
-      this.logger.error(`Erreur Supabase lors de la lecture du cache pour l'ID ${rawgId}: ${error.message}`);
-      throw new InternalServerErrorException('Erreur lors de la récupération du cache du jeu.');
+    if (cachedGame) {
+      this.logger.log(`📦 Jeu #${rawgId} trouvé en cache: ${cachedGame.name}`);
+      return cachedGame;
     }
-    return data ? (data as CachedGame) : null;
-  }
 
-  private async insertGameIntoCache(game: CachedGame): Promise<void> {
-    const { error } = await this.supabaseService.client
+    // Ignorer l'erreur PGRST116 (aucune ligne trouvée)
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      this.logger.error(
+        `Erreur lors de la lecture du cache:`,
+        fetchError.message,
+      );
+    }
+
+    // 2. Si pas en cache, récupérer depuis RAWG
+    this.logger.log(
+      `🌐 Jeu #${rawgId} non trouvé en cache, récupération depuis RAWG...`,
+    );
+    const gameData = await this.rawgService.getGameById(rawgId);
+
+    // 3. Sauvegarder dans le cache
+    const { data: savedGame, error: insertError } = await client
       .from('GameCache')
-      .insert(game);
+      .insert(gameData)
+      .select()
+      .single();
 
-    if (error) {
-      this.logger.error(`Erreur Supabase lors de l'insertion du jeu ${game.rawg_id} dans le cache: ${error.message}`);
-      throw new InternalServerErrorException('Erreur lors de l\'insertion du jeu dans le cache.');
+    if (insertError) {
+      this.logger.error(
+        `❌ Erreur lors de la sauvegarde en cache:`,
+        insertError.message,
+      );
+      throw new Error(
+        `Impossible de sauvegarder le jeu en cache: ${insertError.message}`,
+      );
     }
+
+    this.logger.log(`✅ Jeu #${rawgId} ajouté au cache: ${savedGame.name}`);
+    return savedGame;
   }
 
-  private async updateGameInCache(game: CachedGame): Promise<void> {
-    const { error } = await this.supabaseService.client
+  /**
+   * Vérifie si un jeu existe en cache
+   */
+  async gameExistsInCache(rawgId: number): Promise<boolean> {
+    const client = this.supabaseService.client;
+
+    const { data, error } = await client
       .from('GameCache')
-      .update(game)
-      .eq('rawg_id', game.rawg_id);
+      .select('rawg_id')
+      .eq('rawg_id', rawgId)
+      .single();
 
-    if (error) {
-      this.logger.error(`Erreur Supabase lors de la mise à jour du jeu ${game.rawg_id} dans le cache: ${error.message}`);
-      throw new InternalServerErrorException('Erreur lors de la mise à jour du jeu dans le cache.');
+    if (error && error.code !== 'PGRST116') {
+      this.logger.error(`Erreur lors de la vérification:`, error.message);
     }
-  }
 
-  private isCacheExpired(cachedAt: string): boolean {
-    const cacheDate = new Date(cachedAt);
-    const now = new Date();
-    const diffHours = Math.abs(now.getTime() - cacheDate.getTime()) / (1000 * 60 * 60);
-    return diffHours >= this.CACHE_DURATION_HOURS;
+    return !!data;
   }
 }

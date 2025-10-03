@@ -1,91 +1,66 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { catchError, firstValueFrom, map } from 'rxjs'; 
-import { RawgGame, RawgGameListResponse } from './interfaces/game.interface';
 
 @Injectable()
 export class RawgService {
-  private readonly baseUrl: string;
-  private readonly apiKey: string;
   private readonly logger = new Logger(RawgService.name);
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
-    this.baseUrl = 'https://api.rawg.io/api';
-    const key = this.configService.get<string>('RAWG_API_KEY');
+  private readonly apiKey: string | undefined;
+  private readonly baseUrl = 'https://api.rawg.io/api';
 
-    if (!key) {
-      throw new InternalServerErrorException('RAWG_API_KEY est manquant dans les variables d\'environnement.');
+  constructor(private configService: ConfigService) {
+    this.apiKey = this.configService.get<string>('RAWG_API_KEY');
+    if (!this.apiKey) {
+      this.logger.warn(
+        '⚠️  RAWG_API_KEY non définie. Le service RAWG ne fonctionnera pas.',
+      );
     }
-    this.apiKey = key;
   }
 
-  //récupérer tous les jeux
-   async getGames(): Promise<RawgGame[]> {
-    const url = `${this.baseUrl}/games`;
-    const params = {
-      key: this.apiKey
-    };
+  /**
+   * Récupère les détails d'un jeu depuis l'API RAWG
+   */
+  async getGameById(rawgId: number) {
+    if (!this.apiKey) {
+      throw new Error('RAWG_API_KEY non configurée');
+    }
 
-    this.logger.debug(`Recupération de tous les jeux`);
+    try {
+      const url = `${this.baseUrl}/games/${rawgId}?key=${this.apiKey}`;
+      this.logger.log(`🎮 Récupération du jeu #${rawgId} depuis RAWG...`);
 
-    const data = await firstValueFrom(
-      this.httpService.get<RawgGameListResponse>(url, { params }).pipe(
-        catchError(error => {
-          this.logger.error(`Erreur lors de la récupération des jeux RAWG: ${error.message}`, error.stack);
-          throw new InternalServerErrorException('Erreur de communication avec l\'API RAWG.');
-        }),
-        map(response => response.data) 
-      ),
-    );
-    return data.results;
-  }
-  
-  //chercher des jeux (pour la page d'accueil/recherche)
-  async searchGames(query: string, page = 1, pageSize = 20): Promise<RawgGame[]> {
-    const url = `${this.baseUrl}/games`;
-    const params = {
-      key: this.apiKey,
-      search: query,
-      page: page,
-      page_size: pageSize,
-    };
+      const response = await fetch(url);
 
-    this.logger.debug(`Recherche de jeux sur RAWG: ${query}, page ${page}`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new NotFoundException(
+            `Le jeu avec l'ID ${rawgId} n'existe pas sur RAWG`,
+          );
+        }
+        throw new Error(
+          `Erreur RAWG API: ${response.status} ${response.statusText}`,
+        );
+      }
 
-    const data = await firstValueFrom(
-      this.httpService.get<RawgGameListResponse>(url, { params }).pipe(
-        catchError(error => {
-          this.logger.error(`Erreur lors de la recherche RAWG: ${error.message}`, error.stack);
-          throw new InternalServerErrorException('Erreur de communication avec l\'API RAWG.');
-        }),
-        map(response => response.data) //juste le corps de la réponse
-      ),
-    );
-    return data.results;
-  }
+      const data = await response.json();
 
-  // Méthode pour obtenir les détails complets d'un jeu par son ID
-  async getGameDetails(id: number): Promise<RawgGame> {
-    const url = `${this.baseUrl}/games/${id}`;
-    const params = {
-      key: this.apiKey,
-    };
+      this.logger.log(`✅ Jeu récupéré: ${data.name}`);
 
-    this.logger.debug(`Récupération des détails du jeu RAWG pour l'ID: ${id}`);
-
-    const data = await firstValueFrom(
-      this.httpService.get<RawgGame>(url, { params }).pipe(
-        catchError(error => {
-          this.logger.error(`Erreur lors de la récupération des détails RAWG pour l'ID ${id}: ${error.message}`, error.stack);
-          // Gérer le cas où le jeu n'est pas trouvé (par exemple, NotFoundException)
-          throw new InternalServerErrorException(`Erreur de communication avec l'API RAWG pour l'ID ${id}.`);
-        }),
-        map(response => response.data)
-      ),
-    );
-    return data;
+      return {
+        rawg_id: data.id,
+        name: data.name,
+        image_url: data.background_image || null,
+        metacritic_score: data.metacritic || null,
+        released: data.released || null,
+        description: data.description_raw || null,
+        playtime: data.playtime || 0,
+        website: data.website || null,
+      };
+    } catch (error) {
+      this.logger.error(
+        `❌ Erreur lors de la récupération du jeu #${rawgId}:`,
+        error,
+      );
+      throw error;
+    }
   }
 }

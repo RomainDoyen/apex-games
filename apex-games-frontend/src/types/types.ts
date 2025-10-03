@@ -3,6 +3,7 @@ export interface ButtonProps {
     color: string;
     backgroundColor: string;
     link: string;
+    disabled?: boolean;
 }
 
 export interface CardProps {
@@ -121,41 +122,4 @@ export interface RegisterFormData {
     confirmPassword: string;
 }
 
-export interface AddGameFormData {
-    name: string;
-    description: string;
-    background_image: string;
-    rating: number;
-    released: string;
-    metacritic: number;
-    website: string;
-    genres: string;
-    developers: string;
-    publishers: string;
-}
-
-export interface User {
-    id: number;
-    username: string;
-    email: string;
-    role: 'user' | 'admin';
-}
-
-export interface GameReview {
-    id?: number;
-    gameId: number;
-    userId: number;
-    rating: number;
-    comment: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
-
-export interface ReviewModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    gameId: number;
-    gameName: string;
-    onSubmit: (review: Omit<GameReview, 'id' | 'createdAt' | 'updatedAt'>) => void;
-}
 

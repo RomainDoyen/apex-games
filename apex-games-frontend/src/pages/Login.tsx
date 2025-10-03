@@ -1,24 +1,26 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import LoginForm from '../components/ui/LoginForm';
 import RegisterForm from '../components/ui/RegisterForm';
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
-import type { LoginFormData, RegisterFormData } from '../types/types';
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const location = useLocation();
 
-    const handleLogin = (data: LoginFormData) => {
-        console.log('Login data:', data);
-        // Ici vous ajouterez la logique d'authentification
-        alert('Connexion réussie !');
-    };
-
-    const handleRegister = (data: RegisterFormData) => {
-        console.log('Register data:', data);
-        // Ici vous ajouterez la logique d'inscription
-        alert('Inscription réussie !');
-    };
+    useEffect(() => {
+        // Vérifier si l'utilisateur vient d'une inscription réussie
+        if (location.state?.fromRegister) {
+            setSuccessMessage('Inscription réussie ! Vous pouvez maintenant vous connecter.');
+            // Supprimer le message après 5 secondes
+            const timer = setTimeout(() => {
+                setSuccessMessage(null);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [location.state]);
 
     const switchToRegister = () => {
         setIsLogin(false);
@@ -31,19 +33,23 @@ export default function Login() {
     return (
         <div className="login-page">
             <Header />
-            <main className="login-main">
+            <div className="login-main">
+                {successMessage && (
+                    <div className="success-message">
+                        <p>{successMessage}</p>
+                    </div>
+                )}
+                
                 {isLogin ? (
                     <LoginForm 
-                        onSubmit={handleLogin}
                         onSwitchToRegister={switchToRegister}
                     />
                 ) : (
                     <RegisterForm 
-                        onSubmit={handleRegister}
                         onSwitchToLogin={switchToLogin}
                     />
                 )}
-            </main>
+            </div>
             <Footer />
         </div>
     );

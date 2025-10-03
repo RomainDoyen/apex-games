@@ -1,39 +1,52 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import { BacklogService } from './backlog.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { User } from '../auth/interfaces/auth.interface';
 
-const DUMMY_USER_ID = 'eae145c1-34b0-4aa4-9642-7a73c30ed673'; // A VIRER PLUS TARD (TEST)
-
-@Controller('backlog') 
+@Controller('backlog')
+@UseGuards(ThrottlerGuard, JwtAuthGuard)
 export class BacklogController {
   constructor(private readonly backlogService: BacklogService) {}
-  
-  // TODO: Dans un vrai scénario récup l'ID user via l'authentification (e.g., @Req() ou un Guard)
 
-  // Ajout d'un jeu au backlog
   @Post()
-  async addGameToBacklog(@Body('rawgId') rawgId: number, @Body('status') status: string) {
-    const userId = DUMMY_USER_ID;  //TODO **************A VIRER BIEN SUR CEST DEGEULASSE**************
-    return this.backlogService.addGame(userId, rawgId, status);
+  async addGame(
+    @CurrentUser() user: User,
+    @Body() body: { rawgId: number; status: string },
+  ) {
+    return this.backlogService.addGame(user.id, body.rawgId, body.status);
   }
 
-  // Récupération du backlog de l'utilisateur
   @Get()
-  async getUserBacklog() {
-    const userId = DUMMY_USER_ID;
-    return this.backlogService.getBacklog(userId);
-  }
-  
-  // Modification du statut d'un jeu
-  @Patch(':rawgId/status')
-  async updateGameStatus(@Param('rawgId') rawgId: number, @Body('newStatus') newStatus: string) {
-    const userId = DUMMY_USER_ID;
-    return this.backlogService.updateStatus(userId, parseInt(rawgId.toString()), newStatus); 
+  async getBacklog(@CurrentUser() user: User) {
+    return this.backlogService.getBacklog(user.id);
   }
 
-  // Suppression d'un jeu du backlog
+  @Patch(':rawgId/status')
+  async updateStatus(
+    @CurrentUser() user: User,
+    @Param('rawgId', ParseIntPipe) rawgId: number,
+    @Body() body: { status: string },
+  ) {
+    return this.backlogService.updateStatus(user.id, rawgId, body.status);
+  }
+
   @Delete(':rawgId')
-  async removeGameFromBacklog(@Param('rawgId') rawgId: number) {
-    const userId = DUMMY_USER_ID;
-    return this.backlogService.removeGame(userId, parseInt(rawgId.toString()));
+  async removeGame(
+    @CurrentUser() user: User,
+    @Param('rawgId', ParseIntPipe) rawgId: number,
+  ) {
+    return this.backlogService.removeGame(user.id, rawgId);
   }
 }

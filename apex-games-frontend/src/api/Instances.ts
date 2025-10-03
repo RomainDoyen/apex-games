@@ -1,9 +1,19 @@
 import axios from 'axios';
 import { config } from '../config/env';
+import { useAuthStore } from '../store/authStore';
 
 // Configuration de l'instance axios
 const axiosInstance = axios.create({
     baseURL: 'https://api.rawg.io/api',
+    timeout: 10000,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+// Connexion au backend
+const axiosInstanceBackend = axios.create({
+    baseURL: 'http://localhost:3000',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
@@ -35,4 +45,33 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-export default axiosInstance;
+// Intercepteur pour ajouter la clé API et les paramètres de localisation à chaque requête
+axiosInstanceBackend.interceptors.request.use(
+    (requestConfig) => {
+        return requestConfig;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// Intercepteur de réponse pour gérer les erreurs d'authentification
+axiosInstanceBackend.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            // Token expiré ou invalide
+            const { logout } = useAuthStore.getState();
+            logout();
+            
+            // Rediriger vers la page de connexion si on n'y est pas déjà
+            if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+                window.location.href = '/login';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
+
+export { axiosInstance, axiosInstanceBackend };

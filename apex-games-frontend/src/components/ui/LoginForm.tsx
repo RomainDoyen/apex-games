@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import "../../styles/components/LoginForm.css";
 import Button from "./Button";
 import Input from "./Input";
+import { useAuthStore } from "../../store/authStore";
 import type { LoginFormData } from "../../types/types";
 
 interface LoginFormProps {
-    onSubmit: (data: LoginFormData) => void;
     onSwitchToRegister: () => void;
 }
 
-export default function LoginForm({ onSubmit, onSwitchToRegister }: LoginFormProps) {
+export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
     const [formData, setFormData] = useState<LoginFormData>({
         email: '',
         password: ''
     });
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const { login } = useAuthStore();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -21,11 +28,26 @@ export default function LoginForm({ onSubmit, onSwitchToRegister }: LoginFormPro
             ...prev,
             [name]: value
         }));
+        // Effacer l'erreur quand l'utilisateur tape
+        if (error) setError(null);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(formData);
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            await login(formData.email, formData.password);
+            
+            // Rediriger vers la page d'origine ou la page d'accueil
+            const from = location.state?.from?.pathname || '/';
+            navigate(from, { replace: true });
+        } catch (err: any) {
+            setError(err.message || 'Erreur de connexion');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -66,14 +88,21 @@ export default function LoginForm({ onSubmit, onSwitchToRegister }: LoginFormPro
                             <input type="checkbox" />
                             <span>Se souvenir de moi</span>
                         </label>
-                        <a href="#" className="forgot-password">Mot de passe oublié ?</a>
+                        <Link to="/forgot-password" className="forgot-password">Mot de passe oublié ?</Link>
                     </div>
                     
+                    {error && (
+                        <div className="error-message">
+                            {error}
+                        </div>
+                    )}
+                    
                     <Button
-                        text="Se connecter"
+                        text={isLoading ? "Connexion..." : "Se connecter"}
                         color="#fff"
                         backgroundColor="rgb(0, 138, 192)"
                         link=""
+                        disabled={isLoading}
                     />
                 </form>
                 
