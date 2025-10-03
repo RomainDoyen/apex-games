@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/module'; 
 import { BacklogModule } from './backlog/backlog.module';
 import { RawgModule } from './rawg/rawg.module';
+import { GameCacheModule } from './game-cache/game-cache.module';
+
 
 @Module({
   imports: [
@@ -17,7 +19,9 @@ import { RawgModule } from './rawg/rawg.module';
     
     BacklogModule,
     
-    RawgModule, 
+    RawgModule,
+    
+    GameCacheModule, 
   ],
   controllers: [],
   providers: [],
