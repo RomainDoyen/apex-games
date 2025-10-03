@@ -1,20 +1,15 @@
-<<<<<<< Updated upstream
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
-@Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
-=======
-
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import { SupabaseModule } from './supabase/module';
 import { RawgModule } from './rawg/rawg.module';
 import { GameCacheModule } from './game-cache/game-cache.module';
 import { BacklogModule } from './backlog/backlog.module';
+import { AuthModule } from './auth/auth.module';
+import { AdminModule } from './admin/admin.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -23,13 +18,28 @@ import { BacklogModule } from './backlog/backlog.module';
       isGlobal: true,
     }),
 
+    // Rate limiting global
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, // 1 minute
+        limit: 10, // 10 requêtes par minute par IP
+      },
+    ]),
+
     SupabaseModule,
     RawgModule,
     GameCacheModule,
     BacklogModule,
+    AuthModule,
+    AdminModule,
+    EmailModule,
   ],
   controllers: [],
-  providers: [],
->>>>>>> Stashed changes
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
