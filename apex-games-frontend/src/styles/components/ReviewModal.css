@@ -1,0 +1,240 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: #1e1f23;
+    border: 1px solid #26282c;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #26282c;
+}
+
+.modal-header h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Bungee', sans-serif;
+    text-transform: uppercase;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #cecece;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background-color: #ce3c44;
+    color: #ffffff;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.game-info {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.game-info h3 {
+    color: #98daeb;
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-label {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.star-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.star {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+    filter: grayscale(1);
+}
+
+.star.active {
+    filter: grayscale(0);
+    transform: scale(1.1);
+}
+
+.star:hover {
+    filter: grayscale(0);
+    transform: scale(1.1);
+}
+
+.rating-text {
+    color: #98daeb;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+.comment-textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #26282c;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    background-color: #16181C;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.comment-textarea:focus {
+    outline: none;
+    border-color: #98daeb;
+    box-shadow: 0 0 0 3px rgba(152, 218, 235, 0.1);
+}
+
+.comment-textarea::placeholder {
+    color: #7E8A94;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #26282c;
+}
+
+.cancel-btn {
+    background-color: #1e1f23;
+    color: white;
+    border: 1px solid #26282c;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #26282c;
+    transform: translateY(-1px);
+}
+
+.submit-btn {
+    background-color: #98daeb;
+    color: #16181C;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #82b9c7;
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-overlay {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        max-width: none;
+        width: 100%;
+    }
+    
+    .modal-header,
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .cancel-btn,
+    .submit-btn {
+        width: 100%;
+    }
+    
+    .star {
+        font-size: 1.5rem;
+    }
+}

@@ -179,7 +179,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
                     <Button
                         text={isLoading ? "Inscription..." : "S'inscrire"}
                         color="#fff"
-                        backgroundColor="#646cff"
+                        backgroundColor="rgb(0, 138, 192)"
                         link=""
                         disabled={isLoading}
                     />

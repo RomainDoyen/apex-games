@@ -100,7 +100,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
                     <Button
                         text={isLoading ? "Connexion..." : "Se connecter"}
                         color="#fff"
-                        backgroundColor="#646cff"
+                        backgroundColor="rgb(0, 138, 192)"
                         link=""
                         disabled={isLoading}
                     />

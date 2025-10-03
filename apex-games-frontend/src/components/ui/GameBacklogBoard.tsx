@@ -30,11 +30,16 @@ export default function GameBacklogBoard() {
     const platinum = games.filter(game => game.status === 'Platine');
 
     return (
-        <div className="gameBacklog-board">
-            <BacklogColumn title="À faire" status="A faire" games={backlog} onMoveGame={moveGame} />
-            <BacklogColumn title="En cours" status="En cours" games={inProgress} onMoveGame={moveGame} />
-            <BacklogColumn title="Terminé" status="Termine" games={completed} onMoveGame={moveGame} />
-            <BacklogColumn title="Platiné" status="Platine" games={platinum} onMoveGame={moveGame} />
+        <div className="gameBacklog-container">
+            <div className="backlog-instructions">
+                <p>💡 <strong>Astuce :</strong> Cliquez sur les jeux pour les déplacer d'une colonne à une autre et suivre votre progression !</p>
+            </div>
+            <div className="gameBacklog-board">
+                <BacklogColumn title="À faire" status="A faire" games={backlog} onMoveGame={moveGame} />
+                <BacklogColumn title="En cours" status="En cours" games={inProgress} onMoveGame={moveGame} />
+                <BacklogColumn title="Terminé" status="Termine" games={completed} onMoveGame={moveGame} />
+                <BacklogColumn title="Platiné" status="Platine" games={platinum} onMoveGame={moveGame} />
+            </div>
         </div>
     );
 }

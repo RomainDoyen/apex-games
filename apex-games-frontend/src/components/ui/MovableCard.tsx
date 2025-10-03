@@ -1,8 +1,24 @@
+import { useState } from "react";
 import "../../styles/components/MovableCard.css"
 import Image from "./Image"
-import type { MovableCardProps } from "../../types/types";
+import ReviewModal from "./ReviewModal"
+import type { MovableCardProps, GameReview } from "../../types/types";
 
 export default function MovableCard({id, title, image }: MovableCardProps) {
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
+    const handleReviewClick = () => {
+        setIsReviewModalOpen(true);
+    };
+
+    const handleReviewSubmit = (review: Omit<GameReview, 'id' | 'createdAt' | 'updatedAt'>) => {
+        // TODO: Implémenter l'appel API pour sauvegarder l'avis
+        console.log('Avis soumis:', review);
+        
+        // Simulation d'un succès
+        alert('Votre avis a été publié avec succès !');
+    };
+
     return (
         <div 
             className="movableCard" 
@@ -38,13 +54,21 @@ export default function MovableCard({id, title, image }: MovableCardProps) {
                     
                     <div 
                         className="action-icon review-icon"
-                        //onClick={handleReviewClick} 
+                        onClick={handleReviewClick} 
                         title="Donner un avis"
                     >
                         &#9733; {/* Avis */}
                     </div>
                 </div>
             </div>
+            
+            <ReviewModal
+                isOpen={isReviewModalOpen}
+                onClose={() => setIsReviewModalOpen(false)}
+                gameId={id}
+                gameName={title}
+                onSubmit={handleReviewSubmit}
+            />
         </div>
     )
 }
