@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/module'; 
 import { BacklogModule } from './backlog/backlog.module';
+import { RawgModule } from './rawg/rawg.module';
 
 @Module({
   imports: [
@@ -14,7 +15,9 @@ import { BacklogModule } from './backlog/backlog.module';
     
     SupabaseModule,
     
-    BacklogModule, 
+    BacklogModule,
+    
+    RawgModule, 
   ],
   controllers: [],
   providers: [],
