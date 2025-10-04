@@ -87,9 +87,11 @@ export class AuthService {
     );
 
     // Envoyer l'email de bienvenue (en arrière-plan, ne pas faire échouer l'inscription)
-    this.emailService.sendWelcomeEmail(newUser.email, newUser.username).catch(error => {
-      this.logger.error('Failed to send welcome email:', error);
-    });
+    this.emailService
+      .sendWelcomeEmail(newUser.email, newUser.username)
+      .catch((error) => {
+        this.logger.error('Failed to send welcome email:', error);
+      });
 
     // Ne pas connecter automatiquement l'utilisateur après inscription
     return {
@@ -150,30 +152,45 @@ export class AuthService {
 
       if (error || !user) {
         // Ne pas révéler si l'email existe ou non pour des raisons de sécurité
-        return { message: 'Si cet email existe, un lien de réinitialisation a été envoyé.' };
+        return {
+          message:
+            'Si cet email existe, un lien de réinitialisation a été envoyé.',
+        };
       }
 
       // Générer un token de réinitialisation (expire dans 1 heure)
       const resetToken = this.jwtService.sign(
         { sub: user.id, type: 'password_reset' },
-        { expiresIn: '1h' }
+        { expiresIn: '1h' },
       );
 
       // Envoyer l'email avec le lien de réinitialisation
-      await this.emailService.sendPasswordResetEmail(email, resetToken, user.username);
+      await this.emailService.sendPasswordResetEmail(
+        email,
+        resetToken,
+        user.username,
+      );
 
-      return { message: 'Si cet email existe, un lien de réinitialisation a été envoyé.' };
+      return {
+        message:
+          'Si cet email existe, un lien de réinitialisation a été envoyé.',
+      };
     } catch (error) {
       this.logger.error('Error in forgotPassword:', error);
-      throw new BadRequestException('Erreur lors de la demande de réinitialisation');
+      throw new BadRequestException(
+        'Erreur lors de la demande de réinitialisation',
+      );
     }
   }
 
-  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
+  async resetPassword(
+    token: string,
+    newPassword: string,
+  ): Promise<{ message: string }> {
     try {
       // Vérifier le token
       const payload = this.jwtService.verify(token);
-      
+
       if (payload.type !== 'password_reset') {
         throw new UnauthorizedException('Token invalide');
       }
@@ -188,7 +205,9 @@ export class AuthService {
         .eq('id', payload.sub);
 
       if (error) {
-        throw new BadRequestException('Erreur lors de la mise à jour du mot de passe');
+        throw new BadRequestException(
+          'Erreur lors de la mise à jour du mot de passe',
+        );
       }
 
       return { message: 'Mot de passe mis à jour avec succès' };
@@ -206,7 +225,9 @@ export class AuthService {
 
     const { data: user, error } = await client
       .from('users')
-      .select('id, username, email, role, password_hash, created_at, updated_at')
+      .select(
+        'id, username, email, role, password_hash, created_at, updated_at',
+      )
       .eq('email', email)
       .single();
 

@@ -1,9 +1,8 @@
-
 import { Controller, Get, Param, Query, Logger } from '@nestjs/common';
 import { RawgService } from './rawg.service';
 
 // Ex: GET http://localhost:3000/rawg-test/games
-@Controller('rawg-test') 
+@Controller('rawg-test')
 export class RawgTestController {
   private readonly logger = new Logger(RawgTestController.name);
 
@@ -36,9 +35,11 @@ export class RawgTestController {
     }
     const gameId = parseInt(id, 10);
     if (isNaN(gameId)) {
-        return { message: 'L\'ID doit être un nombre.' };
+      return { message: "L'ID doit être un nombre." };
     }
-    this.logger.log(`Test de récupération des détails RAWG pour l'ID : ${gameId}`);
+    this.logger.log(
+      `Test de récupération des détails RAWG pour l'ID : ${gameId}`,
+    );
     return this.rawgService.getGameDetails(gameId);
   }
 }

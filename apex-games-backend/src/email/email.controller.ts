@@ -11,13 +11,29 @@ export class EmailController {
       await this.emailService.sendPasswordResetEmail(
         body.email,
         'test-token-123',
-        'Test User'
+        'Test User',
       );
       return { message: 'Test email sent successfully' };
     } catch (error) {
-      return { 
+      return {
         error: 'Failed to send test email',
-        details: error.message 
+        details: error.message,
+      };
+    }
+  }
+
+  @Post('test-welcome')
+  async testWelcomeEmail(@Body() body: { email: string; username?: string }) {
+    try {
+      await this.emailService.sendWelcomeEmail(
+        body.email,
+        body.username || 'Test User',
+      );
+      return { message: 'Welcome email sent successfully' };
+    } catch (error) {
+      return {
+        error: 'Failed to send welcome email',
+        details: error.message,
       };
     }
   }
@@ -25,8 +41,9 @@ export class EmailController {
   @Get('config')
   getEmailConfig() {
     return {
-      message: 'Email service is configured',
-      timestamp: new Date().toISOString()
+      message: 'Email service is configured with Resend',
+      provider: 'Resend',
+      timestamp: new Date().toISOString(),
     };
   }
 }

@@ -42,9 +42,7 @@ export class AuthController {
   }
 
   @Get('verify')
-  verifyToken(
-    @CurrentUser() user: User,
-  ): { valid: boolean; user: User } {
+  verifyToken(@CurrentUser() user: User): { valid: boolean; user: User } {
     return {
       valid: true,
       user,
@@ -57,9 +55,7 @@ export class AuthController {
   }
 
   @Post('reset-password')
-  async resetPassword(
-    @Body() body: { token: string; newPassword: string },
-  ) {
+  async resetPassword(@Body() body: { token: string; newPassword: string }) {
     return this.authService.resetPassword(body.token, body.newPassword);
   }
 }

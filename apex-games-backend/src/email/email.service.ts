@@ -1,38 +1,37 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 @Injectable()
 export class EmailService {
   private readonly logger = new Logger(EmailService.name);
-  private transporter: nodemailer.Transporter;
+  private resend: Resend;
 
   constructor(private configService: ConfigService) {
-    const smtpConfig = {
-      host: this.configService.get<string>('SMTP_HOST') || 'smtp-relay.brevo.com',
-      port: parseInt(this.configService.get<string>('SMTP_PORT') || '587'),
-      secure: false, // true pour 465, false pour autres ports
-      auth: {
-        user: this.configService.get<string>('SMTP_USER'),
-        pass: this.configService.get<string>('SMTP_PASS'),
-      },
-    };
+    const resendApiKey = this.configService.get<string>('RESEND_API_KEY');
 
-    this.logger.log('SMTP Configuration:', {
-      host: smtpConfig.host,
-      port: smtpConfig.port,
-      user: smtpConfig.auth.user,
-      pass: smtpConfig.auth.pass ? '***' : 'NOT_SET'
+    if (!resendApiKey) {
+      throw new Error('RESEND_API_KEY is required but not provided');
+    }
+
+    this.logger.log('Resend Configuration:', {
+      apiKey: resendApiKey ? '***' : 'NOT_SET',
     });
 
-    this.transporter = nodemailer.createTransport(smtpConfig);
+    this.resend = new Resend(resendApiKey);
   }
 
-  async sendPasswordResetEmail(email: string, resetToken: string, username: string): Promise<void> {
+  async sendPasswordResetEmail(
+    email: string,
+    resetToken: string,
+    username: string,
+  ): Promise<void> {
     const resetUrl = `${this.configService.get<string>('FRONTEND_URL') || 'http://localhost:5173'}/reset-password?token=${resetToken}`;
-    
-    const mailOptions = {
-      from: `"Apex Games" <${this.configService.get<string>('SMTP_FROM') || 'noreply@apexgames.com'}>`,
+
+    const emailData = {
+      from:
+        this.configService.get<string>('RESEND_FROM') ||
+        'onboarding@resend.dev',
       to: email,
       subject: 'Réinitialisation de votre mot de passe - Apex Games',
       html: this.getPasswordResetTemplate(username, resetUrl),
@@ -40,23 +39,28 @@ export class EmailService {
 
     try {
       this.logger.log(`Attempting to send password reset email to ${email}`);
-      this.logger.log('Mail options:', {
-        from: mailOptions.from,
-        to: mailOptions.to,
-        subject: mailOptions.subject,
-        hasHtml: !!mailOptions.html
+      this.logger.log('Email data:', {
+        from: emailData.from,
+        to: emailData.to,
+        subject: emailData.subject,
+        hasHtml: !!emailData.html,
       });
 
-      const result = await this.transporter.sendMail(mailOptions);
-      this.logger.log(`Password reset email sent successfully to ${email}`, result);
-    } catch (error) {
-      this.logger.error(`Failed to send password reset email to ${email}:`, error);
+      const result = await this.resend.emails.send(emailData);
+      this.logger.log(
+        `Password reset email sent successfully to ${email}`,
+        result,
+      );
+    } catch (error: unknown) {
+      this.logger.error(
+        `Failed to send password reset email to ${email}:`,
+        error,
+      );
       this.logger.error('Error details:', {
-        message: error.message,
-        code: error.code,
-        response: error.response
+        message: error instanceof Error ? error.message : 'Unknown error',
+        name: error instanceof Error ? error.name : 'Unknown error',
       });
-      throw new Error('Erreur lors de l\'envoi de l\'email de réinitialisation');
+      throw new Error("Erreur lors de l'envoi de l'email de réinitialisation");
     }
   }
 
@@ -194,15 +198,17 @@ export class EmailService {
   }
 
   async sendWelcomeEmail(email: string, username: string): Promise<void> {
-    const mailOptions = {
-      from: `"Apex Games" <${this.configService.get<string>('SMTP_FROM') || 'noreply@apexgames.com'}>`,
+    const emailData = {
+      from:
+        this.configService.get<string>('RESEND_FROM') ||
+        'onboarding@resend.dev',
       to: email,
       subject: 'Bienvenue sur Apex Games !',
       html: this.getWelcomeTemplate(username),
     };
 
     try {
-      await this.transporter.sendMail(mailOptions);
+      await this.resend.emails.send(emailData);
       this.logger.log(`Welcome email sent to ${email}`);
     } catch (error) {
       this.logger.error(`Failed to send welcome email to ${email}:`, error);

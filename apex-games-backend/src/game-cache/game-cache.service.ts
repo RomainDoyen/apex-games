@@ -65,6 +65,13 @@ export class GameCacheService {
   }
 
   /**
+   * Alias pour getOrFetchGame (pour compatibilité avec le contrôleur)
+   */
+  async findOrCreateAndGetGame(rawgId: number) {
+    return this.getOrFetchGame(rawgId);
+  }
+
+  /**
    * Vérifie si un jeu existe en cache
    */
   async gameExistsInCache(rawgId: number): Promise<boolean> {
