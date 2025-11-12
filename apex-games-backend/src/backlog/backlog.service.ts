@@ -14,12 +14,12 @@ export class BacklogService {
   ) {}
 
   // Ajout (POST /backlog)
-  async addGame(userId: string, rawgId: number, status: string) {
+  async addGame(userId: string, rawgId: number, status: string, title: string, imageUrl: string) {
     const client = this.supabaseService.client;
 
     // 1. Vérifier si le jeu existe déjà dans le backlog
     const { data: existing } = await client
-      .from('BacklogEntry')
+      .from('BacklogGames')
       .select('rawg_id, status')
       .eq('user_id', userId)
       .eq('rawg_id', rawgId)
@@ -31,16 +31,16 @@ export class BacklogService {
       );
     }
 
-    // 2. S'assurer que le jeu existe en cache (le récupérer depuis RAWG si nécessaire)
-    await this.gameCacheService.getOrFetchGame(rawgId);
-
-    // 3. Insertion dans la table BacklogEntry
+    // 3. Insertion dans la table BacklogGames
     const { data, error } = await client
-      .from('BacklogEntry')
+      .from('BacklogGames')
       .insert({
         user_id: userId,
         rawg_id: rawgId,
         status: status,
+        title: title,
+        image_url: imageUrl,
+        added_at: new Date().toISOString()
       })
       .select()
       .single();
@@ -57,19 +57,16 @@ export class BacklogService {
     return data;
   }
 
+   
   // (GET /backlog)
   async getBacklog(userId: string) {
     const client = this.supabaseService.client;
 
     // Récupérer les entrées du backlog et les joindre au cache des jeux
     const { data, error } = await client
-      .from('BacklogEntry')
+      .from('BacklogGames')
       .select(
-        `
-        status, 
-         rawg_id:rawg_id, 
-        game:rawg_id (name, image_url, metacritic_score) 
-      `,
+       `*`,
       )
       .eq('user_id', userId); // Filtrer par l'utilisateur
 
@@ -87,7 +84,7 @@ export class BacklogService {
     const client = this.supabaseService.client;
 
     const { data, error } = await client
-      .from('BacklogEntry')
+      .from('BacklogGames')
       .update({ status: newStatus, updated_at: new Date().toISOString() })
       .eq('user_id', userId)
       .eq('rawg_id', rawgId)
@@ -108,7 +105,7 @@ export class BacklogService {
     const client = this.supabaseService.client;
 
     const { error } = await client
-      .from('BacklogEntry')
+      .from('BacklogGames')
       .delete()
       .eq('user_id', userId)
       .eq('rawg_id', rawgId);
