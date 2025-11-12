@@ -1,4 +1,4 @@
-import { getAll } from "../../api/Services";
+import { getAllGames } from "../../api/Services";
 import { useState, useEffect, useCallback } from "react";
 import type { Game } from "../../types/types";
 import Spinner from "./Spinner";
@@ -34,7 +34,7 @@ export default function AllGames() {
     const fetchAllGames = useCallback(async () => {
         try {
             setLoading(true);
-            const data = await getAll("/games");
+            const data = await getAllGames("rawg/games");
             setAllGamesData(data.results);
         } catch (err) {
             console.error("Erreur lors du chargement des jeux:", err);

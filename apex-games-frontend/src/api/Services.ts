@@ -10,6 +10,7 @@ export const getById = async (url: string, id: string) => {
     return response.data;
 };
 
+//recupération des jeux depuis le backend (front->backend->appel api rawg)
 export const getAllGames = async (url: string) => {
     const response = await axiosInstanceBackend.get(url);
     return response.data;
