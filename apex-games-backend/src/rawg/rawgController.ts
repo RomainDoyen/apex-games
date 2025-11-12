@@ -2,9 +2,9 @@ import { Controller, Get, Param, Query, Logger } from '@nestjs/common';
 import { RawgService } from './rawg.service';
 
 // Ex: GET http://localhost:3000/rawg-test/games
-@Controller('rawg-test')
-export class RawgTestController {
-  private readonly logger = new Logger(RawgTestController.name);
+@Controller('rawg')
+export class RawgController {
+  private readonly logger = new Logger(RawgController.name);
 
   constructor(private readonly rawgService: RawgService) {}
 

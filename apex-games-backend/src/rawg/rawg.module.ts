@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { RawgService } from './rawg.service';
-import { RawgTestController } from './rawgTestController';
+import { RawgController } from './rawgController';
 
 @Module({
   providers: [RawgService],
   exports: [RawgService],
-  controllers: [RawgTestController]
+  controllers: [RawgController]
 })
 export class RawgModule {}
