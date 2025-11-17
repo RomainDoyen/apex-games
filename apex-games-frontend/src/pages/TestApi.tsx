@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAllGames, createGame, patchGame, deleteGame, getAll } from '../api/Services';
+import { getAllGames, addGameToBacklog, patchGame, deleteGame, getAll } from '../api/Services';
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
 import '../styles/pages/TestApi.css';
@@ -71,10 +71,12 @@ export default function TestApi() {
 
         setIsLoading(true);
         try {
-            await createGame('/backlog', {
-                rawgId: parseInt(rawgId),
-                status: status
-            });
+            await addGameToBacklog('/backlog', {
+            gameId: rawgId as unknown as number,
+            status: "aFaire",       
+            title: "test",
+            gameImage: "test",
+        });
             setSuccessMessage(`✅ Jeu #${rawgId} ajouté avec succès!`);
             setRawgId('');
             fetchBacklog();

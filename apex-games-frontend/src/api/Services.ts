@@ -1,3 +1,4 @@
+import type { Bookmark } from "../types/types.ts";
 import { axiosInstance, axiosInstanceBackend } from "./Instances.ts";
 
 export const getAll = async (url: string) => {
@@ -21,8 +22,8 @@ export const getByIdGame = async (url: string, id: string) => {
     return response.data;
 };
 
-export const createGame = async <T = unknown>(url: string, data: T) => {
-    const response = await axiosInstanceBackend.post(url, data);
+export const addGameToBacklog = async (url: string, data: Bookmark) => {
+    const response = await axiosInstanceBackend.post<{ success: boolean; data: Bookmark }>(url, data);
     return response.data;
 };
 

@@ -36,9 +36,9 @@ function AppWithAuth() {
         
         {/* Routes protégées */}
         <Route path="/backlog" element={
-          <ProtectedRoute>
+          //<ProtectedRoute>
             <Backlog />
-          </ProtectedRoute>
+          //</ProtectedRoute>
         } />
         <Route path="/test-api" element={
           <ProtectedRoute>
