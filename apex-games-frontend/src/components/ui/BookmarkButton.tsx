@@ -1,6 +1,8 @@
 import { useBookmarkStore } from "../../store/bookmarkStore";
-import type { Game } from "../../types/types";
+import type { Game, Bookmark} from "../../types/types";
 import "../../styles/components/BookmarkButton.css";
+import { addGameToBacklog } from "../../api/Services";
+
 
 interface BookmarkButtonProps {
     game: Game;
@@ -16,11 +18,18 @@ export default function BookmarkButton({ game, size = 'medium' }: BookmarkButton
         e.preventDefault();
         e.stopPropagation();
         
-        if (bookmarked) {
-            removeBookmark(game.id);
-        } else {
-            addBookmark(game);
-        }
+        if (!bookmarked) {
+        console.log("Adding to backlog:", game);
+        addGameToBacklog("/backlog", {
+            gameId: game.id,
+            status: "aFaire",       
+            title: game.name,
+            gameImage: game.background_image,
+        });
+        addBookmark(game);
+    } else {
+        removeBookmark(game.id);
+    }
     };
     
     const sizeClasses = {

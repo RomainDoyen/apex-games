@@ -105,9 +105,10 @@ export interface BacklogColumnProps {
 
 export interface Bookmark {
     gameId: number;
-    gameName: string;
+    status: string;
+    title: string;
     gameImage: string;
-    addedAt: Date;
+    //addedAt: Date;
 }
 
 export interface LoginFormData {
