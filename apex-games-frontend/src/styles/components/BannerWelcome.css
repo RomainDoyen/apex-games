@@ -53,3 +53,10 @@
 .banner-welcome-button-link:hover {
     text-decoration: underline;
 }
+
+.banner-welcome-description {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #7E8A94;
+    margin-top: 20px;
+}

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Documentation Apex Games — plateforme de découverte de jeux vidéo." />
+    <title>Documentation — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img
+              class="brand-logo"
+              src="./assets/logo-apex.png"
+              width="52"
+              height="52"
+              alt="Logo Apex Games"
+              decoding="async"
+            />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">Référence technique</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input
+              id="doc-search"
+              type="search"
+              inputmode="search"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Ex : architecture, backlog, API…"
+              data-action="nav-search"
+            />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+
+        <nav>
+          <ul class="nav">
+            <li data-nav-item>
+              <a href="./index.html" aria-current="page">
+                Accueil
+                <small>Vue d’ensemble</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./accessibility/guidelines.html">
+                Accessibilité
+                <small>Règles & tests</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./accessibility/audit-reports.html">
+                Audits
+                <small>Suivi & décisions</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./architecture/overview.html">
+                Architecture
+                <small>Vue technique</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./architecture/data-flow.html">
+                Flux de données
+                <small>Frontend ↔ API ↔ RAWG</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./features/decouverte.html">
+                Découverte des jeux
+                <small>Catalogue, filtres, RAWG</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./features/backlog.html">
+                Backlog Kanban
+                <small>Colonnes, drag & drop</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./features/auth.html">
+                Authentification
+                <small>Connexion, inscription</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./features/favoris.html">
+                Favoris
+                <small>Sauvegarde des jeux</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./features/api-endpoints.html">
+                API (RAWG + Backend)
+                <small>Endpoints & configuration</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./donnees/donnees.html">
+                Données
+                <small>Supabase & RAWG</small>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <div class="card">
+            <h1>Documentation Apex Games</h1>
+            <div class="meta">
+              <span class="tag">React 19</span>
+              <span class="tag">NestJS</span>
+              <span class="tag">RAWG</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+            </div>
+
+            <p>
+              Cette documentation décrit l’architecture, les fonctionnalités et les choix techniques
+              de la plateforme <strong>Apex Games</strong> : découverte de jeux vidéo, catalogue,
+              backlog Kanban, authentification et intégration RAWG.
+            </p>
+
+            <h2>Par où commencer ?</h2>
+            <div class="grid">
+              <section class="col-6 card" aria-label="Accès rapide architecture">
+                <h3>Architecture</h3>
+                <p>Vue d’ensemble : frontend React (Vite), backend NestJS, API RAWG, Supabase.</p>
+                <p><a href="./architecture/overview.html">Voir l’overview</a></p>
+              </section>
+              <section class="col-6 card" aria-label="Accès rapide flux de données">
+                <h3>Flux de données</h3>
+                <p>Frontend ↔ Backend ↔ RAWG et Supabase (auth, backlog).</p>
+                <p><a href="./architecture/data-flow.html">Voir les flux</a></p>
+              </section>
+              <section class="col-6 card" aria-label="Accès rapide découverte">
+                <h3>Découverte des jeux</h3>
+                <p>Catalogue, filtres, pagination, intégration RAWG.</p>
+                <p><a href="./features/decouverte.html">Voir la feature</a></p>
+              </section>
+              <section class="col-6 card" aria-label="Accès rapide backlog">
+                <h3>Backlog Kanban</h3>
+                <p>Tableau de bord, colonnes, drag & drop.</p>
+                <p><a href="./features/backlog.html">Voir la feature</a></p>
+              </section>
+              <section class="col-6 card" aria-label="Accès rapide authentification">
+                <h3>Authentification</h3>
+                <p>Connexion, inscription, sessions.</p>
+                <p><a href="./features/auth.html">Voir la feature</a></p>
+              </section>
+              <section class="col-6 card" aria-label="Accès rapide favoris">
+                <h3>Favoris</h3>
+                <p>Sauvegarde des jeux préférés (état local / backend).</p>
+                <p><a href="./features/favoris.html">Voir la feature</a></p>
+              </section>
+              <section class="col-6 card" aria-label="Accès rapide API">
+                <h3>API (RAWG + Backend)</h3>
+                <p>Endpoints RAWG, proxy, et API NestJS.</p>
+                <p><a href="./features/api-endpoints.html">Voir la doc API</a></p>
+              </section>
+              <section class="col-6 card" aria-label="Accès rapide données">
+                <h3>Données</h3>
+                <p>Supabase (auth, backlog, cache) et RAWG (catalogue jeux).</p>
+                <p><a href="./donnees/donnees.html">Voir la page Données</a></p>
+              </section>
+              <section class="col-6 card" aria-label="Accès rapide accessibilité">
+                <h3>Accessibilité</h3>
+                <p>Règles, checklist et suivi des audits.</p>
+                <p><a href="./accessibility/guidelines.html">Lire les guidelines</a></p>
+              </section>
+            </div>
+
+            <div class="footer">
+              <p>
+                Astuce : utilise la recherche dans la navigation à gauche pour filtrer rapidement les pages.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="./assets/app.js" defer></script>
+  </body>
+</html>

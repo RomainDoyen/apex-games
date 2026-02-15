@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Données Apex Games : Supabase (auth, backlog, cache) et API RAWG." />
+    <title>Données — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img class="brand-logo" src="../assets/logo-apex.png" width="52" height="52" alt="Logo Apex Games" decoding="async" />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">Données</p>
+            </div>
+          </div>
+        </div>
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input id="doc-search" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="Ex : Supabase, RAWG…" data-action="nav-search" />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+        <nav>
+          <ul class="nav">
+            <li data-nav-item><a href="../index.html">Accueil <small>Vue d’ensemble</small></a></li>
+            <li data-nav-item><a href="../accessibility/guidelines.html">Accessibilité <small>Règles & tests</small></a></li>
+            <li data-nav-item><a href="../accessibility/audit-reports.html">Audits <small>Suivi & décisions</small></a></li>
+            <li data-nav-item><a href="../architecture/overview.html">Architecture <small>Vue technique</small></a></li>
+            <li data-nav-item><a href="../architecture/data-flow.html">Flux de données <small>Frontend ↔ API ↔ RAWG</small></a></li>
+            <li data-nav-item><a href="../features/decouverte.html">Découverte des jeux <small>Catalogue, filtres</small></a></li>
+            <li data-nav-item><a href="../features/backlog.html">Backlog Kanban <small>Colonnes, drag & drop</small></a></li>
+            <li data-nav-item><a href="../features/auth.html">Authentification <small>Connexion, inscription</small></a></li>
+            <li data-nav-item><a href="../features/favoris.html">Favoris <small>Sauvegarde des jeux</small></a></li>
+            <li data-nav-item><a href="../features/api-endpoints.html">API (RAWG + Backend) <small>Endpoints</small></a></li>
+            <li data-nav-item><a href="./donnees.html" aria-current="page">Données <small>Supabase & RAWG</small></a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <article class="card">
+            <h1>Données — Vue d’ensemble</h1>
+            <div class="meta">
+              <span class="tag">Supabase</span>
+              <span class="tag">RAWG</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+            </div>
+
+            <h2>Sources de données</h2>
+            <ul>
+              <li><strong>RAWG API</strong> : catalogue de jeux (tendances, recherche, filtres, détails). Données en lecture seule, pas de persistance côté app.</li>
+              <li><strong>Supabase</strong> : authentification (utilisateurs, sessions), backlog (colonnes, jeux par utilisateur), et éventuellement cache métier côté backend.</li>
+            </ul>
+
+            <h2>Backend (NestJS)</h2>
+            <p>Le backend utilise des modules dédiés : <code>AuthModule</code> (Supabase Auth), <code>BacklogModule</code> (Supabase ou tables liées), <code>RawgModule</code> (appels RAWG), <code>GameCacheModule</code> (cache optionnel des jeux). La configuration (URL, clés) se fait via variables d’environnement.</p>
+
+            <h2>Frontend</h2>
+            <p>Les favoris sont persistés en local (Zustand + <code>localStorage</code>) ; le backlog est synchronisé avec le backend (donc Supabase). Voir <a href="../features/favoris.html">Favoris</a> et <a href="../features/backlog.html">Backlog</a>.</p>
+
+            <h2>Base de données (Supabase)</h2>
+            <p>Apex Games n’utilise pas de script SQL dans le dépôt : la base est hébergée et gérée par <strong>Supabase</strong>. Le schéma (tables, RLS, politiques) se configure dans le dashboard Supabase ou via des migrations Supabase.</p>
+            <ul>
+              <li><strong>Auth</strong> : utilisateurs et sessions gérés par Supabase Auth (pas de table <code>users</code> à maintenir à la main).</li>
+              <li><strong>Backlog</strong> : une ou plusieurs tables (ex. <code>backlog</code> ou <code>backlog_games</code>) pour stocker les jeux par utilisateur et par statut (à jouer, en cours, terminé). À documenter dans <a href="./bdd.md">donnees/bdd.md</a> quand le schéma est stabilisé.</li>
+              <li><strong>Cache / autres</strong> : si des tables métier sont ajoutées (cache jeux, préférences), les décrire dans <code>donnees/bdd.md</code> et mettre à jour cette page.</li>
+            </ul>
+            <p>Référence écrite du schéma (pour les développeurs) : <a href="./bdd.md">donnees/bdd.md</a>.</p>
+
+            <div class="footer">
+              <p>Voir aussi : <a href="../architecture/data-flow.html">Flux de données</a>, <a href="../features/api-endpoints.html">API</a>.</p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/app.js" defer></script>
+  </body>
+</html>

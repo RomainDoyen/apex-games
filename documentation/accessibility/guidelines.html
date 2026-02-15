@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Guidelines d’accessibilité Apex Games (WCAG 2.1)." />
+    <title>Accessibilité — Guidelines — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img
+              class="brand-logo"
+              src="../assets/logo-apex.png"
+              width="52"
+              height="52"
+              alt="Logo Apex Games"
+              decoding="async"
+            />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">Accessibilité</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input
+              id="doc-search"
+              type="search"
+              inputmode="search"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Ex : contraste, focus, catalogue…"
+              data-action="nav-search"
+            />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+
+        <nav>
+          <ul class="nav">
+            <li data-nav-item>
+              <a href="../index.html">
+                Accueil
+                <small>Vue d’ensemble</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./guidelines.html" aria-current="page">
+                Accessibilité
+                <small>Règles & tests</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./audit-reports.html">
+                Audits
+                <small>Suivi & décisions</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../architecture/overview.html">
+                Architecture
+                <small>Vue technique</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../architecture/data-flow.html">
+                Flux de données
+                <small>Frontend ↔ API ↔ RAWG</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/decouverte.html">
+                Découverte des jeux
+                <small>Catalogue, filtres</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/backlog.html">
+                Backlog Kanban
+                <small>Colonnes, drag & drop</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/auth.html">
+                Authentification
+                <small>Connexion, inscription</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/favoris.html">
+                Favoris
+                <small>Sauvegarde des jeux</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/api-endpoints.html">
+                API (RAWG + Backend)
+                <small>Endpoints</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../donnees/donnees.html">
+                Données
+                <small>Supabase & RAWG</small>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <article class="card">
+            <h1>Guidelines d’accessibilité (WCAG 2.1)</h1>
+            <div class="meta">
+              <span class="tag">WCAG 2.1</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+              <span>Public : <strong>tous utilisateurs, daltonisme, basse vision, lecteur d’écran</strong></span>
+            </div>
+
+            <h2>Principes à respecter</h2>
+            <ul>
+              <li><strong>Clarté</strong> : libellés explicites, hiérarchie de titres cohérente, une action principale par vue si possible.</li>
+              <li><strong>Prévisibilité</strong> : mêmes composants et emplacements (header, navigation, cartes jeux), libellés stables.</li>
+              <li><strong>Lisibilité</strong> : tailles de texte suffisantes, interlignage confortable, contrastes conformes (AA minimum, AAA visé).</li>
+              <li><strong>Contrôle</strong> : animations maîtrisées (pas de clignotement agressif), feedback visuel + texte sur les actions.</li>
+            </ul>
+
+            <h2>Contraste (AAA)</h2>
+            <ul>
+              <li>Texte normal : ratio <strong>≥ 7:1</strong>.</li>
+              <li>Texte large : ratio <strong>≥ 4.5:1</strong>.</li>
+              <li>Ne jamais coder une information <strong>uniquement</strong> par la couleur.</li>
+            </ul>
+
+            <h2>Navigation & focus</h2>
+            <ul>
+              <li>Tout élément interactif doit être atteignable au clavier (Tab/Shift+Tab).</li>
+              <li>Focus visible : contour net, contraste élevé, non dépendant de la couleur seule.</li>
+              <li>Ordre de tabulation logique (haut→bas, gauche→droite).</li>
+            </ul>
+
+            <h2>Zones tactiles & ergonomie (mobile)</h2>
+            <ul>
+              <li>Taille interactive minimale : <strong>44×44px</strong>.</li>
+              <li>Espacement : au moins <strong>16px</strong> entre actions pour éviter les erreurs.</li>
+              <li>Pas de doubles actions ambiguës sur le même écran.</li>
+            </ul>
+
+            <h2>Animations & feedback</h2>
+            <ul>
+              <li>Animations maîtrisées, sans clignotement excessif (≤ 3 flashes/seconde).</li>
+              <li>Éviter les modales agressives ; préférer des confirmations claires (icône + texte).</li>
+              <li>États de chargement : spinner ou squelette avec texte explicite (“Chargement…”, “Ajout aux favoris”).</li>
+            </ul>
+
+            <h2>Procédure de test (minimum)</h2>
+            <div class="grid">
+              <section class="col-6 card" aria-label="Tests visuels">
+                <h3>Tests visuels</h3>
+                <ul>
+                  <li>Simulation daltonisme (protanopie, deutéranopie, tritanopie).</li>
+                  <li>Simulation basse vision (flou, contraste réduit, zoom 200%).</li>
+                  <li>Vérification contrastes (Lighthouse + outil de contraste).</li>
+                </ul>
+              </section>
+              <section class="col-6 card" aria-label="Tests d’usage">
+                <h3>Tests d’usage</h3>
+                <ul>
+                  <li>Navigation au clavier (Tab / Shift+Tab) sur tout le parcours.</li>
+                  <li>Lecteur d’écran (NVDA sur Windows, VoiceOver macOS, TalkBack sur mobile).</li>
+                  <li>Scénarios Apex Games : accueil, catalogue/filtres, détail jeu, favoris, backlog (drag & drop + alternative clavier), connexion/inscription.</li>
+                </ul>
+              </section>
+            </div>
+
+            <h2>Changelog</h2>
+            <ul>
+              <li><strong>2026-02-15</strong> : adaptation des guidelines pour Apex Games (catalogue, backlog, favoris, auth).</li>
+            </ul>
+
+            <div class="footer">
+              <p>
+                Référence WCAG : <a href="https://www.w3.org/WAI/WCAG21/quickref/?levels=aaa">Quickref AAA</a>
+              </p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/app.js" defer></script>
+  </body>
+</html>
+

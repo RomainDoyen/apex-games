@@ -1,19 +1,40 @@
 import banner from "../../assets/images/banner.png"
 import "../../styles/components/Header.css"
 import Input from "./Input"
-import { SearchIcon, LogOut, User } from "lucide-react"
+import { SearchIcon, LogOut, User, Settings } from "lucide-react"
 import Image from "./Image"
 import { Link } from 'react-router-dom'
 import logo from "../../assets/images/logo-apex.png"
 import { useAuthStore } from "../../store/authStore"
+import { useState, useEffect, useRef } from "react"
 
 export default function Header() {
     const { isAuthenticated, user, logout } = useAuthStore();
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const handleLogout = () => {
         logout();
         window.location.href = '/';
+        setIsProfileMenuOpen(false);
     };
+
+    // Fermer le menu quand on clique en dehors
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsProfileMenuOpen(false);
+            }
+        };
+
+        if (isProfileMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isProfileMenuOpen]);
 
     return (
         <>
@@ -36,21 +57,56 @@ export default function Header() {
                                     <Link to="/admin">Admin</Link>
                                 )}
                                 
-                                <div className="user-menu">
-                                    <span className="user-greeting">
-                                        <User size={16} />
-                                        Bonjour, {user?.username}
-                                        {user?.role === 'admin' && <span className="role-badge admin">Admin</span>}
-                                        {user?.role === 'moderator' && <span className="role-badge moderator">Mod</span>}
-                                    </span>
+                                <div className="user-profile-container" ref={menuRef}>
                                     <button 
-                                        className="logout-btn"
-                                        onClick={handleLogout}
-                                        title="Se déconnecter"
+                                        className="profile-avatar-btn"
+                                        onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                                        aria-label="Menu profil"
                                     >
-                                        <LogOut size={16} />
-                                        Déconnexion
+                                        {user?.avatar ? (
+                                            <img 
+                                                src={user.avatar} 
+                                                alt={user.username} 
+                                                className="profile-avatar-img"
+                                            />
+                                        ) : (
+                                            <div className="profile-avatar-icon">
+                                                <User size={20} />
+                                            </div>
+                                        )}
                                     </button>
+                                    
+                                    {isProfileMenuOpen && (
+                                        <div className="profile-dropdown">
+                                            <div className="profile-dropdown-header">
+                                                <div className="profile-dropdown-greeting">
+                                                    Bonjour, {user?.username}
+                                                </div>
+                                                {user?.role === 'admin' && (
+                                                    <span className="role-badge admin">Admin</span>
+                                                )}
+                                                {user?.role === 'moderator' && (
+                                                    <span className="role-badge moderator">Mod</span>
+                                                )}
+                                            </div>
+                                            <div className="profile-dropdown-divider"></div>
+                                            <Link 
+                                                to="/settings" 
+                                                className="profile-dropdown-item"
+                                                onClick={() => setIsProfileMenuOpen(false)}
+                                            >
+                                                <Settings size={16} />
+                                                Accéder aux paramètres
+                                            </Link>
+                                            <button 
+                                                className="profile-dropdown-item logout-item"
+                                                onClick={handleLogout}
+                                            >
+                                                <LogOut size={16} />
+                                                Déconnexion
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </>
                         ) : (

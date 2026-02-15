@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Feature Découverte des jeux — catalogue, filtres, RAWG." />
+    <title>Découverte des jeux — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img class="brand-logo" src="../assets/logo-apex.png" width="52" height="52" alt="Logo Apex Games" decoding="async" />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">Découverte</p>
+            </div>
+          </div>
+        </div>
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input id="doc-search" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="Ex : catalogue, RAWG…" data-action="nav-search" />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+        <nav>
+          <ul class="nav">
+            <li data-nav-item><a href="../index.html">Accueil <small>Vue d’ensemble</small></a></li>
+            <li data-nav-item><a href="../accessibility/guidelines.html">Accessibilité <small>Règles & tests</small></a></li>
+            <li data-nav-item><a href="../accessibility/audit-reports.html">Audits <small>Suivi & décisions</small></a></li>
+            <li data-nav-item><a href="../architecture/overview.html">Architecture <small>Vue technique</small></a></li>
+            <li data-nav-item><a href="../architecture/data-flow.html">Flux de données <small>Frontend ↔ API ↔ RAWG</small></a></li>
+            <li data-nav-item><a href="./decouverte.html" aria-current="page">Découverte des jeux <small>Catalogue, filtres</small></a></li>
+            <li data-nav-item><a href="./backlog.html">Backlog Kanban <small>Colonnes, drag & drop</small></a></li>
+            <li data-nav-item><a href="./auth.html">Authentification <small>Connexion, inscription</small></a></li>
+            <li data-nav-item><a href="./favoris.html">Favoris <small>Sauvegarde des jeux</small></a></li>
+            <li data-nav-item><a href="./api-endpoints.html">API (RAWG + Backend) <small>Endpoints</small></a></li>
+            <li data-nav-item><a href="../donnees/donnees.html">Données <small>Supabase & RAWG</small></a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <article class="card">
+            <h1>Découverte des jeux</h1>
+            <div class="meta">
+              <span class="tag">Frontend</span>
+              <span class="tag">RAWG</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+            </div>
+
+            <h2>Objectif</h2>
+            <p>Permettre à l’utilisateur de découvrir des jeux vidéo : page d’accueil avec jeux tendances, catalogue complet avec filtres et pagination, page de détail par jeu.</p>
+
+            <h2>Composants principaux</h2>
+            <ul>
+              <li><strong>TrendingGames</strong> : affichage des jeux tendances (API RAWG), grille responsive.</li>
+              <li><strong>AllGames</strong> : catalogue avec filtres, recherche, pagination.</li>
+              <li><strong>GameCard</strong> : carte de jeu (image, titre, métadonnées), lien vers détail et favoris.</li>
+              <li><strong>GameDetails</strong> : page détail d’un jeu (id RAWG).</li>
+            </ul>
+
+            <h2>Données</h2>
+            <p>Les listes et détails viennent de l’API RAWG (directement ou via le backend NestJS avec proxy/cache). Clé API : <code>VITE_RAWG_API_KEY</code> (frontend) ou variable côté backend.</p>
+
+            <h2>UX</h2>
+            <ul>
+              <li>États de chargement (spinner) et messages d’erreur explicites (clé API manquante, réseau).</li>
+              <li>Design responsive : grille adaptée (desktop / tablette / mobile).</li>
+            </ul>
+
+            <div class="footer">
+              <p>Voir : <a href="./api-endpoints.html">API</a>, <a href="../architecture/data-flow.html">Flux de données</a>.</p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/app.js" defer></script>
+  </body>
+</html>

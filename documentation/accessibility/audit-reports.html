@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Rapports d’audit accessibilité Apex Games : constats, corrections, décisions."
+    />
+    <title>Accessibilité — Rapports d’audit — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img
+              class="brand-logo"
+              src="../assets/logo-apex.png"
+              width="52"
+              height="52"
+              alt="Logo Apex Games"
+              decoding="async"
+            />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">Audits</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input
+              id="doc-search"
+              type="search"
+              inputmode="search"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Ex : focus, contraste, catalogue…"
+              data-action="nav-search"
+            />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+
+        <nav>
+          <ul class="nav">
+            <li data-nav-item>
+              <a href="../index.html">
+                Accueil
+                <small>Vue d’ensemble</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./guidelines.html">
+                Accessibilité
+                <small>Règles & tests</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="./audit-reports.html" aria-current="page">
+                Audits
+                <small>Suivi & décisions</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../architecture/overview.html">
+                Architecture
+                <small>Vue technique</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../architecture/data-flow.html">
+                Flux de données
+                <small>Frontend ↔ API ↔ RAWG</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/decouverte.html">
+                Découverte des jeux
+                <small>Catalogue, filtres</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/backlog.html">
+                Backlog Kanban
+                <small>Colonnes, drag & drop</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/auth.html">
+                Authentification
+                <small>Connexion, inscription</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/favoris.html">
+                Favoris
+                <small>Sauvegarde des jeux</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../features/api-endpoints.html">
+                API (RAWG + Backend)
+                <small>Endpoints</small>
+              </a>
+            </li>
+            <li data-nav-item>
+              <a href="../donnees/donnees.html">
+                Données
+                <small>Supabase & RAWG</small>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <article class="card">
+            <h1>Rapports d’audit accessibilité</h1>
+            <div class="meta">
+              <span class="tag">Suivi</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+            </div>
+
+            <p>
+              Cette page centralise les audits accessibilité (automatiques et manuels) pour <strong>Apex Games</strong>,
+              ainsi que les décisions de conception (contraste, focus, navigation clavier, lecteur d’écran).
+            </p>
+
+            <h2>Rapport initial (baseline) — Apex Games</h2>
+            <p><strong>Date :</strong> 2026-02-15</p>
+            <ul>
+              <li>
+                <strong>Constat</strong> : documentation technique créée et adaptée au projet (architecture, features, API).
+                <strong>Action</strong> : documentation HTML accessible avec navigation, recherche, liens cohérents.
+              </li>
+              <li>
+                <strong>Objectif</strong> : conserver une base accessible pour le frontend — contrastes suffisants (design sombre),
+                focus visible sur les liens et boutons, libellés explicites (carthes jeux, favoris, backlog).
+              </li>
+              <li>
+                <strong>Zones à auditer régulièrement</strong> : page d’accueil (tendances), catalogue et filtres, détail jeu,
+                tableau Kanban (drag & drop + alternative clavier), formulaires login/register, états de chargement et messages d’erreur.
+              </li>
+            </ul>
+
+            <h2>Modèle de fiche d’audit (à réutiliser)</h2>
+            <p>Pour chaque nouvel audit (feature ou page), ajouter une section avec le format suivant :</p>
+            <pre><code>Titre : [Écran / Feature — ex. Catalogue, Backlog, Login]
+Contexte : [web desktop / mobile]
+Outils : [Lighthouse, simulateur daltonisme, NVDA/VoiceOver, tests clavier]
+
+Constats :
+- [problème + gravité + critère WCAG concerné]
+
+Corrections :
+- [changement + fichier/composant + justification]
+
+Vérification :
+- [étapes reproductibles pour valider la correction]
+
+Décisions :
+- [trade-off éventuel]</code></pre>
+
+            <h2>Changelog</h2>
+            <ul>
+              <li><strong>2026-02-15</strong> : adaptation de la page audits pour Apex Games (baseline + modèle de fiche, suppression des audits BEPCO).</li>
+            </ul>
+
+            <div class="footer">
+              <p>
+                Conseil : chaque modification significative (nouvelle page, formulaire, composant interactif) peut faire l’objet d’une entrée ici (constat → correction → vérification).
+              </p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/app.js" defer></script>
+  </body>
+</html>
+

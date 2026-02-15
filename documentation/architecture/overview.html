@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Vue d'ensemble architecture Apex Games (React + Vite + NestJS + RAWG + Supabase)." />
+    <title>Architecture — Overview — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img class="brand-logo" src="../assets/logo-apex.png" width="52" height="52" alt="Logo Apex Games" decoding="async" />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">Architecture</p>
+            </div>
+          </div>
+        </div>
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input id="doc-search" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="Ex : modules, auth, RAWG…" data-action="nav-search" />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+        <nav>
+          <ul class="nav">
+            <li data-nav-item><a href="../index.html">Accueil <small>Vue d’ensemble</small></a></li>
+            <li data-nav-item><a href="../accessibility/guidelines.html">Accessibilité <small>Règles & tests</small></a></li>
+            <li data-nav-item><a href="../accessibility/audit-reports.html">Audits <small>Suivi & décisions</small></a></li>
+            <li data-nav-item><a href="./overview.html" aria-current="page">Architecture <small>Vue technique</small></a></li>
+            <li data-nav-item><a href="./data-flow.html">Flux de données <small>Frontend ↔ API ↔ RAWG</small></a></li>
+            <li data-nav-item><a href="../features/decouverte.html">Découverte des jeux <small>Catalogue, filtres</small></a></li>
+            <li data-nav-item><a href="../features/backlog.html">Backlog Kanban <small>Colonnes, drag & drop</small></a></li>
+            <li data-nav-item><a href="../features/auth.html">Authentification <small>Connexion, inscription</small></a></li>
+            <li data-nav-item><a href="../features/favoris.html">Favoris <small>Sauvegarde des jeux</small></a></li>
+            <li data-nav-item><a href="../features/api-endpoints.html">API (RAWG + Backend) <small>Endpoints</small></a></li>
+            <li data-nav-item><a href="../donnees/donnees.html">Données <small>Supabase & RAWG</small></a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <article class="card">
+            <h1>Architecture — Overview</h1>
+            <div class="meta">
+              <span class="tag">React 19</span>
+              <span class="tag">Vite</span>
+              <span class="tag">NestJS</span>
+              <span class="tag">RAWG</span>
+              <span class="tag">Supabase</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+            </div>
+
+            <h2>Objectif</h2>
+            <p>
+              Une architecture simple et maintenable : frontend React (Vite), API NestJS, données jeux via RAWG,
+              et Supabase pour l’auth et le backlog. Le README principal reste court ; le détail est dans cette documentation.
+            </p>
+
+            <h2>Structure du repo</h2>
+            <pre><code>apex-games/
+├── apex-games-frontend/     (React 19 + Vite — app utilisateur)
+├── apex-games-backend/      (NestJS — API REST, proxy RAWG, auth, backlog)
+├── documentation/           (ce mini-site statique)
+└── README.md</code></pre>
+
+            <h2>Conventions</h2>
+            <ul>
+              <li><strong>API REST</strong> : endpoints clairs, réponses cohérentes, erreurs structurées.</li>
+              <li><strong>Sécurité</strong> : validation, auth (Supabase/JWT), rate limiting (Throttler).</li>
+              <li><strong>Frontend</strong> : composants réutilisables, état avec Zustand, appels via Axios.</li>
+            </ul>
+
+            <h2>Stack technique</h2>
+            <div class="grid">
+              <section class="col-6 card" aria-label="Frontend">
+                <h3>Frontend</h3>
+                <ul>
+                  <li>React 19, TypeScript</li>
+                  <li>Vite (build)</li>
+                  <li>React Router, Zustand, Axios</li>
+                  <li>Lucide React (icônes)</li>
+                </ul>
+              </section>
+              <section class="col-6 card" aria-label="Backend">
+                <h3>Backend</h3>
+                <ul>
+                  <li>NestJS (TypeScript)</li>
+                  <li>Supabase (auth, données)</li>
+                  <li>RAWG (catalogue jeux)</li>
+                  <li>Jest (tests)</li>
+                </ul>
+              </section>
+            </div>
+
+            <h2>Configuration (env)</h2>
+            <ul>
+              <li><strong>Frontend</strong> : <code>apex-games-frontend/.env</code> — <code>VITE_RAWG_API_KEY</code>, URL API backend si besoin.</li>
+              <li><strong>Backend</strong> : <code>apex-games-backend/.env</code> — Supabase, RAWG, CORS, etc.</li>
+            </ul>
+
+            <div class="footer">
+              <p>Suite : <a href="./data-flow.html">Flux de données</a></p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/app.js" defer></script>
+  </body>
+</html>

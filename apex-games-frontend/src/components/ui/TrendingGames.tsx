@@ -38,7 +38,7 @@ export default function TrendingGames() {
             <div className="trending-games">
                 <div className="trending-header">
                     <h2>Tendances récentes</h2>
-                    <a href="/trending" className="see-more-link">Voir plus</a>
+                    <a href="/games" className="see-more-link">Voir plus</a>
                 </div>
                 <div className="trending-cards trending-cards-loading">
                     <Spinner />
@@ -52,7 +52,7 @@ export default function TrendingGames() {
             <div className="trending-games">
                 <div className="trending-header">
                     <h2>Tendances récentes</h2>
-                    <a href="/trending" className="see-more-link">Voir plus</a>
+                    <a href="/games" className="see-more-link">Voir plus</a>
                 </div>
                 <div className="trending-cards">
                     <div style={{ 

@@ -11,6 +11,7 @@ import TestApi from './pages/TestApi.tsx'
 import Admin from './pages/Admin.tsx'
 import ForgotPassword from './pages/ForgotPassword.tsx'
 import ResetPassword from './pages/ResetPassword.tsx'
+import Settings from './pages/Settings.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx'
 import RoleProtectedRoute from './components/RoleProtectedRoute.tsx'
 import { useAuthStore } from './store/authStore'
@@ -38,6 +39,11 @@ function AppWithAuth() {
         <Route path="/backlog" element={
           <ProtectedRoute>
             <Backlog />
+          </ProtectedRoute>
+        } />
+        <Route path="/settings" element={
+          <ProtectedRoute>
+            <Settings />
           </ProtectedRoute>
         } />
         <Route path="/test-api" element={

@@ -18,6 +18,9 @@ export default function BannerWelcome() {
                 <Button text="Créer un compte gratuit" color="#ffffff" backgroundColor="#008AC0" link="/register" />
                 <p>ou <a href="/login" className="banner-welcome-button-link">connexion</a> si vous avez un compte</p>
             </div>
+            <div className="banner-welcome-description">
+                <p>APEX Games est une plateforme de gestion de jeux qui permet de suivre les jeux que vous avez joué, de les ajouter à vos listes, de les noter et de les partager avec vos amis.</p>
+            </div>
         </div>
     )
 }

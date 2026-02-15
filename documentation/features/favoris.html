@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Feature Favoris — sauvegarde des jeux préférés (Zustand, localStorage)." />
+    <title>Favoris — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img class="brand-logo" src="../assets/logo-apex.png" width="52" height="52" alt="Logo Apex Games" decoding="async" />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">Favoris</p>
+            </div>
+          </div>
+        </div>
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input id="doc-search" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="Ex : favoris, bookmark…" data-action="nav-search" />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+        <nav>
+          <ul class="nav">
+            <li data-nav-item><a href="../index.html">Accueil <small>Vue d’ensemble</small></a></li>
+            <li data-nav-item><a href="../accessibility/guidelines.html">Accessibilité <small>Règles & tests</small></a></li>
+            <li data-nav-item><a href="../accessibility/audit-reports.html">Audits <small>Suivi & décisions</small></a></li>
+            <li data-nav-item><a href="../architecture/overview.html">Architecture <small>Vue technique</small></a></li>
+            <li data-nav-item><a href="../architecture/data-flow.html">Flux de données <small>Frontend ↔ API ↔ RAWG</small></a></li>
+            <li data-nav-item><a href="./decouverte.html">Découverte des jeux <small>Catalogue, filtres</small></a></li>
+            <li data-nav-item><a href="./backlog.html">Backlog Kanban <small>Colonnes, drag & drop</small></a></li>
+            <li data-nav-item><a href="./auth.html">Authentification <small>Connexion, inscription</small></a></li>
+            <li data-nav-item><a href="./favoris.html" aria-current="page">Favoris <small>Sauvegarde des jeux</small></a></li>
+            <li data-nav-item><a href="./api-endpoints.html">API (RAWG + Backend) <small>Endpoints</small></a></li>
+            <li data-nav-item><a href="../donnees/donnees.html">Données <small>Supabase & RAWG</small></a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <article class="card">
+            <h1>Favoris</h1>
+            <div class="meta">
+              <span class="tag">Frontend</span>
+              <span class="tag">Zustand</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+            </div>
+
+            <h2>Objectif</h2>
+            <p>Permettre à l’utilisateur de sauvegarder ses jeux préférés (liste de favoris) et de les retrouver d’une session à l’autre. L’implémentation actuelle est côté client uniquement.</p>
+
+            <h2>Implémentation</h2>
+            <p><strong>Zustand</strong> avec middleware <code>persist</code> : le store (<code>bookmarkStore</code>) contient une liste de favoris (id jeu, nom, image, date d’ajout). Persistance dans <code>localStorage</code> sous la clé <code>bookmark-storage</code>.</p>
+
+            <h2>API du store</h2>
+            <ul>
+              <li><code>addBookmark(game)</code> : ajoute un jeu (évite les doublons).</li>
+              <li><code>removeBookmark(gameId)</code> : retire un jeu.</li>
+              <li><code>isBookmarked(gameId)</code> : indique si le jeu est en favoris.</li>
+              <li><code>clearBookmarks()</code> : vide la liste.</li>
+            </ul>
+
+            <h2>Évolution possible</h2>
+            <p>Pour synchroniser les favoris entre appareils ou les lier au compte utilisateur, un endpoint backend (et Supabase) pourra être ajouté ; le frontend continuera d’utiliser le même store avec une couche API optionnelle.</p>
+
+            <div class="footer">
+              <p>Voir : <a href="./decouverte.html">Découverte des jeux</a>, <a href="../donnees/donnees.html">Données</a>.</p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/app.js" defer></script>
+  </body>
+</html>

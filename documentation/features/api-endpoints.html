@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="API Apex Games — RAWG et Backend NestJS." />
+    <title>API (RAWG + Backend) — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img class="brand-logo" src="../assets/logo-apex.png" width="52" height="52" alt="Logo Apex Games" decoding="async" />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">API</p>
+            </div>
+          </div>
+        </div>
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input id="doc-search" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="Ex : auth, backlog, RAWG…" data-action="nav-search" />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+        <nav>
+          <ul class="nav">
+            <li data-nav-item><a href="../index.html">Accueil <small>Vue d’ensemble</small></a></li>
+            <li data-nav-item><a href="../accessibility/guidelines.html">Accessibilité <small>Règles & tests</small></a></li>
+            <li data-nav-item><a href="../accessibility/audit-reports.html">Audits <small>Suivi & décisions</small></a></li>
+            <li data-nav-item><a href="../architecture/overview.html">Architecture <small>Vue technique</small></a></li>
+            <li data-nav-item><a href="../architecture/data-flow.html">Flux de données <small>Frontend ↔ API ↔ RAWG</small></a></li>
+            <li data-nav-item><a href="./decouverte.html">Découverte des jeux <small>Catalogue, filtres</small></a></li>
+            <li data-nav-item><a href="./backlog.html">Backlog Kanban <small>Colonnes, drag & drop</small></a></li>
+            <li data-nav-item><a href="./auth.html">Authentification <small>Connexion, inscription</small></a></li>
+            <li data-nav-item><a href="./favoris.html">Favoris <small>Sauvegarde des jeux</small></a></li>
+            <li data-nav-item><a href="./api-endpoints.html" aria-current="page">API (RAWG + Backend) <small>Endpoints</small></a></li>
+            <li data-nav-item><a href="../donnees/donnees.html">Données <small>Supabase & RAWG</small></a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <article class="card">
+            <h1>API — RAWG & Backend NestJS</h1>
+            <div class="meta">
+              <span class="tag">NestJS</span>
+              <span class="tag">RAWG</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+            </div>
+
+            <p>Le frontend peut appeler l’API RAWG (via proxy Vite ou directement avec une clé) et le backend NestJS pour l’auth, le backlog et le cache. Base URL backend : <code>http://localhost:3000</code> (dev).</p>
+
+            <h2>Authentification <code>/auth</code></h2>
+            <p>Rate limiting (Throttler) actif sur ces routes. Réponses : tokens + utilisateur selon la config (JWT / Supabase).</p>
+            <ul>
+              <li><strong>POST /auth/register</strong> — Inscription (body : email, mot de passe, etc.).</li>
+              <li><strong>POST /auth/login</strong> — Connexion.</li>
+              <li><strong>POST /auth/logout</strong> — Déconnexion.</li>
+              <li><strong>GET /auth/profile</strong> — Profil utilisateur (JWT requis).</li>
+              <li><strong>GET /auth/verify</strong> — Vérification du token.</li>
+              <li><strong>POST /auth/forgot-password</strong> — Mot de passe oublié (body : email).</li>
+              <li><strong>POST /auth/reset-password</strong> — Réinitialisation (body : token, newPassword).</li>
+            </ul>
+
+            <h2>Backlog <code>/backlog</code></h2>
+            <p>Toutes les routes backlog nécessitent une authentification JWT.</p>
+            <ul>
+              <li><strong>POST /backlog</strong> — Ajouter un jeu (body : rawgId, status, title, image).</li>
+              <li><strong>GET /backlog</strong> — Liste du backlog de l’utilisateur.</li>
+              <li><strong>PATCH /backlog/:rawgId/status</strong> — Changer le statut (colonne) d’un jeu.</li>
+              <li><strong>DELETE /backlog/:rawgId</strong> — Retirer un jeu du backlog.</li>
+            </ul>
+
+            <h2>RAWG (proxy backend) <code>/rawg</code></h2>
+            <p>Le backend appelle l’API RAWG avec la clé serveur ; le frontend peut passer par ce contrôleur pour éviter d’exposer la clé.</p>
+            <ul>
+              <li><strong>GET /rawg/games</strong> — Liste de jeux (dépend de l’implémentation RawgService).</li>
+              <li><strong>GET /rawg/search?query=...</strong> — Recherche par texte.</li>
+              <li><strong>GET /rawg/details/:id</strong> — Détail d’un jeu par ID RAWG.</li>
+            </ul>
+
+            <h2>Cache & Admin</h2>
+            <ul>
+              <li><strong>GET /cache-test/:rawgId</strong> — Test de cache jeu (GameCacheModule).</li>
+              <li><strong>GET /admin/dashboard</strong>, <strong>/admin/users</strong>, <strong>/admin/moderation</strong> — Réservés aux rôles admin.</li>
+            </ul>
+
+            <h2>Configuration frontend</h2>
+            <p>Clé RAWG : <code>VITE_RAWG_API_KEY</code> dans <code>apex-games-frontend/.env</code>. Pour utiliser le backend comme proxy, configurer l’URL de l’API dans les services Axios (ex. <code>VITE_API_URL=http://localhost:3000</code>).</p>
+
+            <div class="footer">
+              <p>Voir : <a href="./auth.html">Authentification</a>, <a href="./backlog.html">Backlog</a>, <a href="https://rawg.io/apidocs" target="_blank" rel="noopener">Documentation RAWG</a>.</p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/app.js" defer></script>
+  </body>
+</html>

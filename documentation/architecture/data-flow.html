@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Flux de données Apex Games : frontend ↔ backend ↔ RAWG et Supabase." />
+    <title>Architecture — Flux de données — Apex Games</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigation de la documentation">
+        <div class="brand" role="banner">
+          <div class="brand-left">
+            <img class="brand-logo" src="../assets/logo-apex.png" width="52" height="52" alt="Logo Apex Games" decoding="async" />
+            <div>
+              <p class="brand-title">Apex Games — Documentation</p>
+              <p class="brand-subtitle">Flux de données</p>
+            </div>
+          </div>
+        </div>
+        <div class="controls" aria-label="Outils de navigation">
+          <div class="control">
+            <label class="label" for="doc-search">Rechercher</label>
+            <input id="doc-search" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="Ex : RAWG, auth, backlog…" data-action="nav-search" />
+            <div class="label" aria-live="polite" data-nav-live>Recherche prête.</div>
+          </div>
+        </div>
+        <nav>
+          <ul class="nav">
+            <li data-nav-item><a href="../index.html">Accueil <small>Vue d’ensemble</small></a></li>
+            <li data-nav-item><a href="../accessibility/guidelines.html">Accessibilité <small>Règles & tests</small></a></li>
+            <li data-nav-item><a href="../accessibility/audit-reports.html">Audits <small>Suivi & décisions</small></a></li>
+            <li data-nav-item><a href="./overview.html">Architecture <small>Vue technique</small></a></li>
+            <li data-nav-item><a href="./data-flow.html" aria-current="page">Flux de données <small>Frontend ↔ API ↔ RAWG</small></a></li>
+            <li data-nav-item><a href="../features/decouverte.html">Découverte des jeux <small>Catalogue, filtres</small></a></li>
+            <li data-nav-item><a href="../features/backlog.html">Backlog Kanban <small>Colonnes, drag & drop</small></a></li>
+            <li data-nav-item><a href="../features/auth.html">Authentification <small>Connexion, inscription</small></a></li>
+            <li data-nav-item><a href="../features/favoris.html">Favoris <small>Sauvegarde des jeux</small></a></li>
+            <li data-nav-item><a href="../features/api-endpoints.html">API (RAWG + Backend) <small>Endpoints</small></a></li>
+            <li data-nav-item><a href="../donnees/donnees.html">Données <small>Supabase & RAWG</small></a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="contenu" tabindex="-1">
+        <div class="container">
+          <article class="card">
+            <h1>Flux de données</h1>
+            <div class="meta">
+              <span class="tag">Frontend</span>
+              <span class="tag">Backend</span>
+              <span class="tag">RAWG</span>
+              <span class="tag">Supabase</span>
+              <span>Dernière mise à jour : <strong>2026-02-15</strong></span>
+            </div>
+
+            <h2>Vue d’ensemble (texte)</h2>
+            <pre><code>React Frontend (apex-games-frontend)
+  ├─ Page d’accueil / tendances
+  │    └─ Appels API (proxy ou direct) → RAWG
+  ├─ Catalogue / découverte
+  │    └─ Backend NestJS ou proxy → RAWG (filtres, pagination)
+  ├─ Détail d’un jeu
+  │    └─ RAWG (id)
+  ├─ Favoris
+  │    └─ Zustand (local) et/ou Backend → Supabase
+  ├─ Backlog Kanban
+  │    └─ Backend NestJS → Supabase (backlog)
+  └─ Auth (login / register)
+       └─ Backend NestJS ↔ Supabase Auth</code></pre>
+
+            <h2>Flux : Découverte de jeux</h2>
+            <ol>
+              <li>Le frontend envoie une requête (liste, recherche, filtres) au backend ou au proxy RAWG.</li>
+              <li>Le backend peut appeler RAWG avec la clé API, mettre en cache (GameCache) si configuré.</li>
+              <li>Réponse : liste de jeux (ids, titres, images, métadonnées) affichée dans le catalogue.</li>
+            </ol>
+
+            <h2>Flux : Backlog</h2>
+            <ol>
+              <li>L’utilisateur déplace une carte entre colonnes (À jouer, En cours, Terminé).</li>
+              <li>Le frontend envoie la mise à jour au backend (NestJS → BacklogModule).</li>
+              <li>Le backend persiste dans Supabase (ou autre store) et renvoie la nouvelle structure.</li>
+            </ol>
+
+            <h2>Flux : Authentification</h2>
+            <ol>
+              <li>Inscription / Connexion : formulaire → Backend → Supabase Auth.</li>
+              <li>Le backend renvoie un token ou des cookies de session.</li>
+              <li>Les requêtes protégées (backlog, profil) envoient le token dans les headers.</li>
+            </ol>
+
+            <div class="footer">
+              <p>Voir aussi : <a href="../features/decouverte.html">Découverte des jeux</a>, <a href="../features/backlog.html">Backlog</a>, <a href="../features/auth.html">Authentification</a>, <a href="../donnees/donnees.html">Données</a>.</p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/app.js" defer></script>
+  </body>
+</html>
